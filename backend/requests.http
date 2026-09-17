@@ -1,0 +1,39 @@
+POST http://localhost:5000/api/projects
+Content-Type: application/json
+
+{
+  "slug": "test-residence",
+  "title": "Test Residence",
+  "location": "Tunis, Tunisia",
+  "status": "available",
+  "price": "From 250,000 TND",
+  "apartments": 10,
+  "deliveryDate": "December 2027",
+  "coverImage": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde",
+  "description": "My first project created through the backend API.",
+  "mapEmbedUrl": "https://www.google.com/maps?q=Tunis,Tunisia&output=embed",
+  "projectImages": [],
+  "apartmentUnits": []
+}
+
+###
+
+DELETE http://localhost:5000/api/projects/test-residence
+
+### UPDATE project
+PUT http://localhost:5000/api/projects/green-city
+Content-Type: application/json
+
+{
+  "title": "Green City Updated",
+  "location": "Nasr, Tunisia",
+  "status": "available",
+  "price": "From 650,000 TND",
+  "apartments": 24,
+  "deliveryDate": "December 2026",
+  "coverImage": "https://scontent.ftun14-1.fna.fbcdn.net/v/t39.30808-6/653706179_1525402872926842_416741111423504952_n.jpg",
+  "description": "Updated project description.",
+  "mapEmbedUrl": "https://www.google.com/maps?q=Sousse,Tunisia&output=embed",
+  "projectImages": [],
+  "apartmentUnits": []
+}
