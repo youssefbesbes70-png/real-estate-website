@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { Helmet } from "react-helmet-async"
+
 import API_URL from "../config"
 
 function Contact() {
@@ -43,6 +45,26 @@ function Contact() {
       const data = await response.json()
 
       if (!response.ok) {
+        if (
+          data.errors &&
+          Array.isArray(data.errors)
+        ) {
+          const validationErrors =
+            data.errors
+              .map(
+                (item: {
+                  field: string
+                  message: string
+                }) =>
+                  `${item.field}: ${item.message}`
+              )
+              .join(" | ")
+
+          throw new Error(
+            validationErrors
+          )
+        }
+
         throw new Error(
           data.message ||
             "Something went wrong"
@@ -51,11 +73,11 @@ function Contact() {
 
       setIsSubmitted(true)
 
-      // Clear the form
       setName("")
       setEmail("")
       setSubject("")
       setMessage("")
+
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message)
@@ -70,159 +92,230 @@ function Contact() {
   }
 
   return (
-    <div className="contact-page">
+    <>
+      {/* =========================================
+          SEO
+      ========================================= */}
 
-      <section className="contact-hero">
-        <h1>Contact Us</h1>
+      <Helmet>
+        <title>
+          Contact | Archytas Immobilière
+        </title>
 
-        <p>
-          Get in touch with our team for more
-          information about our projects,
-          availability, and apartment reservations.
-        </p>
-      </section>
+        <meta
+          name="description"
+          content="Contactez Archytas Immobilière pour obtenir plus d'informations sur nos projets, nos appartements disponibles et nos résidences en Tunisie."
+        />
+
+        <link
+          rel="canonical"
+          href="https://www.archytas-immobiliere.com/contact"
+        />
+
+        <meta
+          property="og:title"
+          content="Contact | Archytas Immobilière"
+        />
+
+        <meta
+          property="og:description"
+          content="Contactez notre équipe pour obtenir plus d'informations sur les projets immobiliers et appartements Archytas Immobilière."
+        />
+
+        <meta
+          property="og:url"
+          content="https://www.archytas-immobiliere.com/contact"
+        />
+
+        <meta
+          property="og:type"
+          content="website"
+        />
+      </Helmet>
 
 
-      <section className="contact-content">
+      <div className="contact-page">
 
-        {/* ============================= */}
-        {/* CONTACT INFORMATION */}
-        {/* ============================= */}
+        {/* =========================================
+            HERO
+        ========================================= */}
 
-        <div className="contact-info">
+        <section className="contact-hero">
 
-          <h2>Our Office</h2>
+          <h1>
+            Contact Us
+          </h1>
 
           <p>
-            <strong>Phone:</strong>{" "}
-            +216 12 345 678
+            Get in touch with our team for more
+            information about our projects,
+            availability, and apartment reservations.
           </p>
 
-          <p>
-            <strong>Email:</strong>{" "}
-            contact@dreambuild.com
-          </p>
-
-          <p>
-            <strong>Address:</strong>{" "}
-            Tunis, Tunisia
-          </p>
+        </section>
 
 
-          <div className="contact-map">
+        {/* =========================================
+            CONTENT
+        ========================================= */}
 
-            <h3>
-              Find Us on the Map
-            </h3>
+        <section className="contact-content">
 
-            <iframe
-              src="https://www.google.com/maps?q=Tunis,Tunisia&output=embed"
-              width="100%"
-              height="300"
-              style={{
-                border: 0,
-              }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Office location map"
-            />
+          {/* CONTACT INFORMATION */}
+
+          <div className="contact-info">
+
+            <h2>
+              Our Office
+            </h2>
+
+            <p>
+              <strong>
+                Phone:
+              </strong>{" "}
+              +216 12 345 678
+            </p>
+
+            <p>
+              <strong>
+                Email:
+              </strong>{" "}
+              contact@dreambuild.com
+            </p>
+
+            <p>
+              <strong>
+                Address:
+              </strong>{" "}
+              Tunis, Tunisia
+            </p>
+
+
+            {/* MAP */}
+
+            <div className="contact-map">
+
+              <h3>
+                Find Us on the Map
+              </h3>
+
+              <iframe
+                src="https://www.google.com/maps?q=Tunis,Tunisia&output=embed"
+                width="100%"
+                height="300"
+                style={{
+                  border: 0,
+                }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Archytas Immobilière office location"
+              />
+
+            </div>
 
           </div>
 
-        </div>
 
+          {/* =========================================
+              CONTACT FORM
+          ========================================= */}
 
-        {/* ============================= */}
-        {/* CONTACT FORM */}
-        {/* ============================= */}
-
-        <form
-          className="contact-form"
-          onSubmit={handleSubmit}
-        >
-
-          <h2>
-            Send Us a Message
-          </h2>
-
-
-          <input
-            type="text"
-            placeholder="Your Name"
-            value={name}
-            onChange={(event) =>
-              setName(event.target.value)
-            }
-            required
-          />
-
-
-          <input
-            type="email"
-            placeholder="Your Email"
-            value={email}
-            onChange={(event) =>
-              setEmail(event.target.value)
-            }
-            required
-          />
-
-
-          <input
-            type="text"
-            placeholder="Subject"
-            value={subject}
-            onChange={(event) =>
-              setSubject(event.target.value)
-            }
-            required
-          />
-
-
-          <textarea
-            placeholder="Your Message"
-            rows={6}
-            value={message}
-            onChange={(event) =>
-              setMessage(event.target.value)
-            }
-            required
-          />
-
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
+          <form
+            className="contact-form"
+            onSubmit={handleSubmit}
           >
-            {isSubmitting
-              ? "Sending..."
-              : "Send Message"}
-          </button>
+
+            <h2>
+              Send Us a Message
+            </h2>
 
 
-          {/* SUCCESS */}
+            <input
+              type="text"
+              placeholder="Your Name"
+              value={name}
+              onChange={(event) =>
+                setName(
+                  event.target.value
+                )
+              }
+              required
+            />
 
-          {isSubmitted && (
-            <p className="success-message">
-              Your message has been sent successfully.
-            </p>
-          )}
+
+            <input
+              type="email"
+              placeholder="Your Email"
+              value={email}
+              onChange={(event) =>
+                setEmail(
+                  event.target.value
+                )
+              }
+              required
+            />
 
 
-          {/* ERROR */}
+            <input
+              type="text"
+              placeholder="Subject"
+              value={subject}
+              onChange={(event) =>
+                setSubject(
+                  event.target.value
+                )
+              }
+              required
+            />
 
-          {error && (
-            <p className="error-message">
-              {error}
-            </p>
-          )}
 
-        </form>
+            <textarea
+              placeholder="Your Message"
+              rows={6}
+              value={message}
+              onChange={(event) =>
+                setMessage(
+                  event.target.value
+                )
+              }
+              required
+            />
 
-      </section>
 
-    </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? "Sending..."
+                : "Send Message"}
+            </button>
+
+
+            {/* SUCCESS */}
+
+            {isSubmitted && (
+              <p className="success-message">
+                Your message has been sent successfully.
+              </p>
+            )}
+
+
+            {/* ERROR */}
+
+            {error && (
+              <p className="error-message">
+                {error}
+              </p>
+            )}
+
+          </form>
+
+        </section>
+
+      </div>
+    </>
   )
 }
 

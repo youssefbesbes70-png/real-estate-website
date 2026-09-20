@@ -1,11 +1,15 @@
 import API_URL from "../config"
+
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { Helmet } from "react-helmet-async"
+
 import ProjectHeroSlider from "../components/ProjectHeroSlider"
 import ProjectInfo from "../components/ProjectInfo"
 import ProjectMap from "../components/ProjectMap"
 import ApartmentUnitsSection from "../components/ApartmentUnitsSection"
 import Lightbox from "../components/Lightbox"
+
 
 type ApartmentUnit = {
   type: string
@@ -15,6 +19,7 @@ type ApartmentUnit = {
   floor: string
   surface: string
 }
+
 
 type Project = {
   slug: string
@@ -31,17 +36,41 @@ type Project = {
   mapEmbedUrl: string
 }
 
+
 function ProjectDetails() {
   const { slug } = useParams()
 
-  const [project, setProject] = useState<Project | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+  const [project, setProject] =
+    useState<Project | null>(null)
 
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
-  const [selectedApartmentIndex, setSelectedApartmentIndex] = useState(0)
-  const [selectedApartmentImageIndex, setSelectedApartmentImageIndex] =
-    useState(0)
+  const [loading, setLoading] =
+    useState(true)
+
+  const [error, setError] =
+    useState(false)
+
+
+  const [
+    isLightboxOpen,
+    setIsLightboxOpen,
+  ] = useState(false)
+
+
+  const [
+    selectedApartmentIndex,
+    setSelectedApartmentIndex,
+  ] = useState(0)
+
+
+  const [
+    selectedApartmentImageIndex,
+    setSelectedApartmentImageIndex,
+  ] = useState(0)
+
+
+  // =====================================================
+  // FETCH PROJECT
+  // =====================================================
 
   useEffect(() => {
     if (!slug) {
@@ -50,10 +79,19 @@ function ProjectDetails() {
       return
     }
 
-    fetch(`${API_URL}/api/projects/${slug}`)
+
+    setLoading(true)
+    setError(false)
+
+
+    fetch(
+      `${API_URL}/api/projects/${slug}`
+    )
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Project not found")
+          throw new Error(
+            "Project not found"
+          )
         }
 
         return response.json()
@@ -63,66 +101,293 @@ function ProjectDetails() {
         setLoading(false)
       })
       .catch((error) => {
-        console.error("Error fetching project:", error)
+        console.error(
+          "Error fetching project:",
+          error
+        )
+
         setError(true)
         setLoading(false)
       })
+
   }, [slug])
+
+
+  // =====================================================
+  // LIGHTBOX
+  // =====================================================
 
   const openLightbox = (
     apartmentIndex: number,
     imageIndex: number = 0
   ) => {
-    setSelectedApartmentIndex(apartmentIndex)
-    setSelectedApartmentImageIndex(imageIndex)
+    setSelectedApartmentIndex(
+      apartmentIndex
+    )
+
+    setSelectedApartmentImageIndex(
+      imageIndex
+    )
+
     setIsLightboxOpen(true)
   }
+
 
   const closeLightbox = () => {
     setIsLightboxOpen(false)
   }
 
+
+  // =====================================================
+  // LOADING
+  // =====================================================
+
   if (loading) {
-    return <h2 style={{ padding: "40px" }}>Loading...</h2>
+    return (
+      <>
+        <Helmet>
+          <title>
+            Loading project | Archytas Immobilière
+          </title>
+        </Helmet>
+
+        <h2
+          style={{
+            padding: "40px",
+          }}
+        >
+          Loading...
+        </h2>
+      </>
+    )
   }
+
+
+  // =====================================================
+  // NOT FOUND
+  // =====================================================
 
   if (error || !project) {
-    return <h2 style={{ padding: "40px" }}>Project not found</h2>
+    return (
+      <>
+        <Helmet>
+          <title>
+            Project not found | Archytas Immobilière
+          </title>
+
+          <meta
+            name="robots"
+            content="noindex, nofollow"
+          />
+        </Helmet>
+
+        <h2
+          style={{
+            padding: "40px",
+          }}
+        >
+          Project not found
+        </h2>
+      </>
+    )
   }
 
+
+  // =====================================================
+  // SEO VALUES
+  // =====================================================
+
+  const projectUrl =
+    `https://www.archytas-immobiliere.com/projects/${project.slug}`
+
+
+  const seoTitle =
+    `${project.title} | Archytas Immobilière`
+
+
+  const seoDescription =
+    project.description
+      ? project.description.length > 155
+        ? `${project.description.substring(
+            0,
+            152
+          )}...`
+        : project.description
+      : `Découvrez ${project.title}, un projet immobilier Archytas Immobilière situé à ${project.location}.`
+
+
+  const seoImage =
+    project.coverImage ||
+    project.projectImages?.[0] ||
+    ""
+
+
+  // =====================================================
+  // PAGE
+  // =====================================================
+
   return (
-    <div className="project-details">
-      <ProjectHeroSlider
-        title={project.title}
-        projectImages={project.projectImages}
-      />
+    <>
+      {/* =========================================
+          SEO
+      ========================================= */}
 
-      <div className="project-details-content">
-        <ProjectInfo project={project} />
+      <Helmet>
 
-        <ProjectMap
-          title={project.title}
-          mapEmbedUrl={project.mapEmbedUrl}
+        <title>
+          {seoTitle}
+        </title>
+
+
+        <meta
+          name="description"
+          content={seoDescription}
         />
 
-        <ApartmentUnitsSection
-          title={project.title}
-          apartmentUnits={project.apartmentUnits}
-          onOpenLightbox={openLightbox}
+
+        <meta
+          name="robots"
+          content="index, follow"
         />
+
+
+        <link
+          rel="canonical"
+          href={projectUrl}
+        />
+
+
+        {/* OPEN GRAPH */}
+
+        <meta
+          property="og:title"
+          content={seoTitle}
+        />
+
+        <meta
+          property="og:description"
+          content={seoDescription}
+        />
+
+        <meta
+          property="og:url"
+          content={projectUrl}
+        />
+
+        <meta
+          property="og:type"
+          content="website"
+        />
+
+
+        {seoImage && (
+          <meta
+            property="og:image"
+            content={seoImage}
+          />
+        )}
+
+
+        {/* TWITTER / X */}
+
+        <meta
+          name="twitter:card"
+          content={
+            seoImage
+              ? "summary_large_image"
+              : "summary"
+          }
+        />
+
+        <meta
+          name="twitter:title"
+          content={seoTitle}
+        />
+
+        <meta
+          name="twitter:description"
+          content={seoDescription}
+        />
+
+
+        {seoImage && (
+          <meta
+            name="twitter:image"
+            content={seoImage}
+          />
+        )}
+
+      </Helmet>
+
+
+      {/* =========================================
+          PROJECT PAGE
+      ========================================= */}
+
+      <div className="project-details">
+
+        <ProjectHeroSlider
+          title={project.title}
+          projectImages={
+            project.projectImages
+          }
+        />
+
+
+        <div className="project-details-content">
+
+          <ProjectInfo
+            project={project}
+          />
+
+
+          <ProjectMap
+            title={project.title}
+            mapEmbedUrl={
+              project.mapEmbedUrl
+            }
+          />
+
+
+          <ApartmentUnitsSection
+            title={project.title}
+            apartmentUnits={
+              project.apartmentUnits
+            }
+            onOpenLightbox={
+              openLightbox
+            }
+          />
+
+        </div>
+
+
+        {/* =========================================
+            LIGHTBOX
+        ========================================= */}
+
+        {isLightboxOpen && (
+          <Lightbox
+            title={project.title}
+            apartment={
+              project.apartmentUnits[
+                selectedApartmentIndex
+              ]
+            }
+            imageIndex={
+              selectedApartmentImageIndex
+            }
+            setImageIndex={
+              setSelectedApartmentImageIndex
+            }
+            onClose={closeLightbox}
+          />
+        )}
+
       </div>
-
-      {isLightboxOpen && (
-        <Lightbox
-          title={project.title}
-          apartment={project.apartmentUnits[selectedApartmentIndex]}
-          imageIndex={selectedApartmentImageIndex}
-          setImageIndex={setSelectedApartmentImageIndex}
-          onClose={closeLightbox}
-        />
-      )}
-    </div>
+    </>
   )
 }
+
 
 export default ProjectDetails
