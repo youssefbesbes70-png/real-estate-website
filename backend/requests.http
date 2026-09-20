@@ -37,3 +37,64 @@ Content-Type: application/json
   "projectImages": [],
   "apartmentUnits": []
 }
+
+### ADMIN LOGIN
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "YOUR_ADMIN_PASSWORD"
+}
+
+###
+
+### ADMIN LOGIN
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "walid",
+  "password": "youssef2912"
+}
+
+###
+
+POST http://localhost:5000/api/projects
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "slug": "BAD SLUG !!!",
+  "title": "",
+  "location": "Tunis",
+  "status": "hello",
+  "price": "100 TND",
+  "apartments": -20,
+  "deliveryDate": "",
+  "coverImage": "",
+  "description": "",
+  "mapEmbedUrl": "",
+  "projectImages": [],
+  "apartmentUnits": []
+}
+
+### TEST CONTACT FORM
+
+POST http://localhost:5000/api/contact
+Content-Type: application/json
+
+{
+  "name": "Youssef",
+  "email": "youssef@example.com",
+  "phone": "+216 12345678",
+  "subject": "Interested in Green City",
+  "message": "Hello, I would like to get more information about this project."
+}
+
+### GET CONTACT MESSAGES
+
+GET http://localhost:5000/api/contact
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbklkIjoxLCJ1c2VybmFtZSI6IndhbGlkIiwiaWF0IjoxNzg5ODUzMDgzLCJleHAiOjE3ODk4NjAyODN9.34oz1UtPaEBrfc7CsM19uIkZdz5icEJJfaH_GTWWqpc

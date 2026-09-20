@@ -1,3 +1,4 @@
+import API_URL from "../config"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import ProjectHeroSlider from "../components/ProjectHeroSlider"
@@ -49,7 +50,7 @@ function ProjectDetails() {
       return
     }
 
-    fetch(`http://localhost:5000/api/projects/${slug}`)
+    fetch(`${API_URL}/api/projects/${slug}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Project not found")

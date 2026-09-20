@@ -1,6 +1,7 @@
+import API_URL from "../config"
 import { useEffect, useState } from "react"
 import ProjectCard from "../components/ProjectCard"
-
+  
 type Project = {
   slug: string
   title: string
@@ -13,7 +14,7 @@ function Projects() {
   const [projects, setProjects] = useState<Project[]>([])
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/projects")
+    fetch(`${API_URL}/api/projects`)
       .then((response) => response.json())
       .then((data) => {
         setProjects(data)
