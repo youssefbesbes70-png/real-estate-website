@@ -1214,3 +1214,108 @@ iframe {
     padding: 18px 16px;
   }
 }
+/* =========================================
+   PROJECT LOADING SKELETON
+========================================= */
+
+.project-skeleton {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 240px;
+  background: #e5e7eb;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-line,
+.skeleton-button {
+  position: relative;
+  overflow: hidden;
+  background: #e5e7eb;
+  border-radius: 6px;
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 24px;
+  margin-bottom: 14px;
+}
+
+.skeleton-location {
+  width: 50%;
+  height: 16px;
+  margin-bottom: 14px;
+}
+
+.skeleton-status {
+  width: 30%;
+  height: 16px;
+  margin-bottom: 20px;
+}
+
+.skeleton-button {
+  width: 120px;
+  height: 42px;
+}
+
+
+/* Shimmer animation */
+
+.skeleton-image::after,
+.skeleton-line::after,
+.skeleton-button::after {
+  content: "";
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+
+  animation: skeleton-loading 1.4s infinite;
+}
+
+@keyframes skeleton-loading {
+  100% {
+    left: 100%;
+  }
+}
+
+
+/* =========================================
+   PROJECT ERROR
+========================================= */
+
+.projects-error {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.projects-error h2 {
+  margin-bottom: 10px;
+}
+
+.projects-error p {
+  margin-bottom: 20px;
+}
+
+.projects-error button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

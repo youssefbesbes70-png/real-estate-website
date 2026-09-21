@@ -1,4 +1,5 @@
 import API_URL from "../config"
+
 import { useEffect, useState } from "react"
 import { Helmet } from "react-helmet-async"
 
@@ -14,24 +15,53 @@ type Project = {
 
 function Projects() {
   const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
 
   useEffect(() => {
-    fetch(`${API_URL}/api/projects`)
-      .then((response) => response.json())
-      .then((data) => {
+    const loadProjects = async () => {
+      try {
+        setLoading(true)
+        setError("")
+
+        const response = await fetch(
+          `${API_URL}/api/projects`
+        )
+
+        if (!response.ok) {
+          throw new Error(
+            "Unable to load projects."
+          )
+        }
+
+        const data = await response.json()
+
         setProjects(data)
-      })
-      .catch((error) => {
-        console.error("Error fetching projects:", error)
-      })
+      } catch (error) {
+        console.error(
+          "Error fetching projects:",
+          error
+        )
+
+        setError(
+          "Unable to load projects. Please try again."
+        )
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProjects()
   }, [])
 
   const availableProjects = projects.filter(
-    (project) => project.status === "available"
+    (project) =>
+      project.status === "available"
   )
 
   const soldProjects = projects.filter(
-    (project) => project.status === "sold"
+    (project) =>
+      project.status === "sold"
   )
 
   return (
@@ -73,41 +103,119 @@ function Projects() {
       </Helmet>
 
       <div>
-        <section className="projects-section">
-          <h2>Available Projects</h2>
+        {/* =========================================
+            LOADING
+        ========================================= */}
 
-          <div className="projects-list">
-            {availableProjects.map((project) => (
-              <ProjectCard
-                key={project.slug}
-                slug={project.slug}
-                title={project.title}
-                location={project.location}
-                status={project.status}
-                image={project.coverImage}
-              />
-            ))}
+        {loading && (
+          <section className="projects-section">
+            <h2>
+              Available Projects
+            </h2>
+
+            <div className="projects-list">
+              <ProjectSkeleton />
+              <ProjectSkeleton />
+              <ProjectSkeleton />
+            </div>
+          </section>
+        )}
+
+        {/* =========================================
+            ERROR
+        ========================================= */}
+
+        {!loading && error && (
+          <div className="projects-error">
+            <h2>
+              Something went wrong
+            </h2>
+
+            <p>
+              {error}
+            </p>
+
+            <button
+              onClick={() =>
+                window.location.reload()
+              }
+            >
+              Try Again
+            </button>
           </div>
-        </section>
+        )}
 
-        <section className="projects-section sold-section">
-          <h2>Sold Projects</h2>
+        {/* =========================================
+            PROJECTS
+        ========================================= */}
 
-          <div className="projects-list">
-            {soldProjects.map((project) => (
-              <ProjectCard
-                key={project.slug}
-                slug={project.slug}
-                title={project.title}
-                location={project.location}
-                status={project.status}
-                image={project.coverImage}
-              />
-            ))}
-          </div>
-        </section>
+        {!loading && !error && (
+          <>
+            <section className="projects-section">
+              <h2>
+                Available Projects
+              </h2>
+
+              <div className="projects-list">
+                {availableProjects.map(
+                  (project) => (
+                    <ProjectCard
+                      key={project.slug}
+                      slug={project.slug}
+                      title={project.title}
+                      location={project.location}
+                      status={project.status}
+                      image={project.coverImage}
+                    />
+                  )
+                )}
+              </div>
+            </section>
+
+            {soldProjects.length > 0 && (
+              <section className="projects-section sold-section">
+                <h2>
+                  Sold Projects
+                </h2>
+
+                <div className="projects-list">
+                  {soldProjects.map(
+                    (project) => (
+                      <ProjectCard
+                        key={project.slug}
+                        slug={project.slug}
+                        title={project.title}
+                        location={project.location}
+                        status={project.status}
+                        image={project.coverImage}
+                      />
+                    )
+                  )}
+                </div>
+              </section>
+            )}
+          </>
+        )}
       </div>
     </>
+  )
+}
+
+function ProjectSkeleton() {
+  return (
+    <div className="project-card project-skeleton">
+      <div className="skeleton-image" />
+
+      <div className="project-card-content">
+        <div className="skeleton-line skeleton-title" />
+
+        <div className="skeleton-line skeleton-location" />
+
+        <div className="skeleton-line skeleton-status" />
+
+        <div className="skeleton-button" />
+      </div>
+    </div>
   )
 }
 
