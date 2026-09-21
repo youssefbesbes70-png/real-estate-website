@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 type ApartmentUnit = {
   type: string
   images: string[]
@@ -15,6 +17,30 @@ type LightboxProps = {
   onClose: () => void
 }
 
+
+// =====================================================
+// CLOUDINARY OPTIMIZATION
+// =====================================================
+
+function optimizeImage(
+  imageUrl: string,
+  width: number = 1600
+) {
+  if (!imageUrl) {
+    return ""
+  }
+
+  if (imageUrl.includes("/image/upload/")) {
+    return imageUrl.replace(
+      "/image/upload/",
+      `/image/upload/f_auto,q_auto,w_${width},c_limit/`
+    )
+  }
+
+  return imageUrl
+}
+
+
 function Lightbox({
   title,
   apartment,
@@ -22,26 +48,137 @@ function Lightbox({
   setImageIndex,
   onClose,
 }: LightboxProps) {
+  const images = apartment.images || []
+
   const goToPreviousImage = () => {
-    if (imageIndex === 0) {
-      setImageIndex(apartment.images.length - 1)
-    } else {
-      setImageIndex(imageIndex - 1)
+    if (images.length === 0) {
+      return
     }
+
+    setImageIndex(
+      imageIndex === 0
+        ? images.length - 1
+        : imageIndex - 1
+    )
   }
+
 
   const goToNextImage = () => {
-    if (imageIndex === apartment.images.length - 1) {
-      setImageIndex(0)
-    } else {
-      setImageIndex(imageIndex + 1)
+    if (images.length === 0) {
+      return
     }
+
+    setImageIndex(
+      imageIndex === images.length - 1
+        ? 0
+        : imageIndex + 1
+    )
   }
 
+
+  // =====================================================
+  // KEYBOARD CONTROLS
+  // =====================================================
+
+  useEffect(() => {
+    const handleKeyDown = (
+      event: KeyboardEvent
+    ) => {
+      if (event.key === "Escape") {
+        onClose()
+      }
+
+      if (event.key === "ArrowLeft") {
+        goToPreviousImage()
+      }
+
+      if (event.key === "ArrowRight") {
+        goToNextImage()
+      }
+    }
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    )
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      )
+    }
+  }, [imageIndex, images.length])
+
+
+  // =====================================================
+  // PRELOAD NEXT IMAGE
+  // =====================================================
+
+  useEffect(() => {
+    if (images.length <= 1) {
+      return
+    }
+
+    const nextIndex =
+      imageIndex === images.length - 1
+        ? 0
+        : imageIndex + 1
+
+    const nextImage = new Image()
+
+    nextImage.src = optimizeImage(
+      images[nextIndex],
+      1600
+    )
+  }, [imageIndex, images])
+
+
+  // =====================================================
+  // NO IMAGES
+  // =====================================================
+
+  if (images.length === 0) {
+    return null
+  }
+
+
+  const currentImage =
+    images[imageIndex]
+
+  const optimized1200 =
+    optimizeImage(
+      currentImage,
+      1200
+    )
+
+  const optimized1600 =
+    optimizeImage(
+      currentImage,
+      1600
+    )
+
+  const optimized2000 =
+    optimizeImage(
+      currentImage,
+      2000
+    )
+
+
   return (
-    <div className="lightbox-overlay" onClick={onClose}>
+    <div
+      className="lightbox-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${title} ${apartment.type} image gallery`}
+    >
+
+      {/* CLOSE */}
+
       <button
         className="lightbox-close"
+        aria-label="Close image gallery"
         onClick={(event) => {
           event.stopPropagation()
           onClose()
@@ -50,44 +187,82 @@ function Lightbox({
         ×
       </button>
 
-      <button
-        className="lightbox-arrow left"
-        onClick={(event) => {
-          event.stopPropagation()
-          goToPreviousImage()
-        }}
-      >
-        ←
-      </button>
+
+      {/* LEFT ARROW */}
+
+      {images.length > 1 && (
+        <button
+          className="lightbox-arrow left"
+          aria-label="Previous image"
+          onClick={(event) => {
+            event.stopPropagation()
+            goToPreviousImage()
+          }}
+        >
+          ←
+        </button>
+      )}
+
+
+      {/* CONTENT */}
 
       <div
         className="lightbox-content"
-        onClick={(event) => event.stopPropagation()}
+        onClick={(event) =>
+          event.stopPropagation()
+        }
       >
         <h3 className="lightbox-title">
           {title} - {apartment.type}
         </h3>
 
+
         <img
           className="lightbox-image"
-          src={apartment.images[imageIndex]}
-          alt={`${title} ${apartment.type} interior ${imageIndex + 1}`}
+
+          src={optimized1600}
+
+          srcSet={`
+            ${optimized1200} 1200w,
+            ${optimized1600} 1600w,
+            ${optimized2000} 2000w
+          `}
+
+          sizes="90vw"
+
+          alt={`${title} ${
+            apartment.type
+          } interior ${
+            imageIndex + 1
+          }`}
+
+          decoding="async"
         />
 
+
         <p className="lightbox-counter">
-          {imageIndex + 1} / {apartment.images.length}
+          {imageIndex + 1} /{" "}
+          {images.length}
         </p>
+
       </div>
 
-      <button
-        className="lightbox-arrow right"
-        onClick={(event) => {
-          event.stopPropagation()
-          goToNextImage()
-        }}
-      >
-        →
-      </button>
+
+      {/* RIGHT ARROW */}
+
+      {images.length > 1 && (
+        <button
+          className="lightbox-arrow right"
+          aria-label="Next image"
+          onClick={(event) => {
+            event.stopPropagation()
+            goToNextImage()
+          }}
+        >
+          →
+        </button>
+      )}
+
     </div>
   )
 }
