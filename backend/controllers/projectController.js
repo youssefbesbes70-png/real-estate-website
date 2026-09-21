@@ -1,6 +1,7 @@
-const pool =
-  require("../db");
+const pool = require("../db")
 
+// Full project data.
+// Used for one project, creating and updating.
 const projectFields = `
   id,
   slug,
@@ -26,95 +27,106 @@ const projectFields = `
 
   apartment_units
     AS "apartmentUnits"
-`;
+`
 
-async function getAllProjects(
-  req,
-  res
-) {
+// Lightweight data.
+// Used for the /projects page.
+const projectListFields = `
+  slug,
+  title,
+  location,
+  status,
+
+  cover_image
+    AS "coverImage"
+`
+
+// =====================================================
+// GET ALL PROJECTS
+// =====================================================
+
+async function getAllProjects(req, res) {
   try {
-    const result =
-      await pool.query(`
-        SELECT
-          ${projectFields}
+    const result = await pool.query(`
+      SELECT
+        ${projectListFields}
 
-        FROM projects
+      FROM projects
 
-        ORDER BY id
-      `);
+      ORDER BY id
+    `)
 
-    res.json(
-      result.rows
-    );
+    // Allow browsers to briefly cache the project list
+    res.set(
+      "Cache-Control",
+      "public, max-age=60, stale-while-revalidate=300"
+    )
+
+    res.json(result.rows)
   } catch (error) {
     console.error(
       "Error getting projects:",
       error
-    );
+    )
 
-    res
-      .status(500)
-      .json({
-        message:
-          "Server error",
-      });
+    res.status(500).json({
+      message: "Server error",
+    })
   }
 }
 
-async function getProjectBySlug(
-  req,
-  res
-) {
+
+// =====================================================
+// GET ONE PROJECT
+// =====================================================
+
+async function getProjectBySlug(req, res) {
   try {
-    const { slug } =
-      req.params;
+    const { slug } = req.params
 
-    const result =
-      await pool.query(
-        `
-        SELECT
-          ${projectFields}
+    const result = await pool.query(
+      `
+      SELECT
+        ${projectFields}
 
-        FROM projects
+      FROM projects
 
-        WHERE slug = $1
-        `,
-        [slug]
-      );
+      WHERE slug = $1
+      `,
+      [slug]
+    )
 
-    if (
-      result.rows.length === 0
-    ) {
-      return res
-        .status(404)
-        .json({
-          message:
-            "Project not found",
-        });
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        message: "Project not found",
+      })
     }
 
-    res.json(
-      result.rows[0]
-    );
+    // Individual project data can also be cached briefly
+    res.set(
+      "Cache-Control",
+      "public, max-age=60, stale-while-revalidate=300"
+    )
+
+    res.json(result.rows[0])
   } catch (error) {
     console.error(
       "Error getting project:",
       error
-    );
+    )
 
-    res
-      .status(500)
-      .json({
-        message:
-          "Server error",
-      });
+    res.status(500).json({
+      message: "Server error",
+    })
   }
 }
 
-async function createProject(
-  req,
-  res
-) {
+
+// =====================================================
+// CREATE PROJECT
+// =====================================================
+
+async function createProject(req, res) {
   try {
     const {
       slug,
@@ -129,104 +141,89 @@ async function createProject(
       mapEmbedUrl,
       projectImages,
       apartmentUnits,
-    } = req.body;
+    } = req.body
 
-    const result =
-      await pool.query(
-        `
-        INSERT INTO projects (
-          slug,
-          title,
-          location,
-          status,
-          price,
-          apartments,
-          delivery_date,
-          cover_image,
-          description,
-          map_embed_url,
-          project_images,
-          apartment_units
-        )
+    const result = await pool.query(
+      `
+      INSERT INTO projects (
+        slug,
+        title,
+        location,
+        status,
+        price,
+        apartments,
+        delivery_date,
+        cover_image,
+        description,
+        map_embed_url,
+        project_images,
+        apartment_units
+      )
 
-        VALUES (
-          $1,
-          $2,
-          $3,
-          $4,
-          $5,
-          $6,
-          $7,
-          $8,
-          $9,
-          $10,
-          $11,
-          $12
-        )
+      VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6,
+        $7,
+        $8,
+        $9,
+        $10,
+        $11,
+        $12
+      )
 
-        RETURNING
-          ${projectFields}
-        `,
-        [
-          slug,
-          title,
-          location,
-          status,
-          price,
-          apartments,
-          deliveryDate,
-          coverImage,
-          description,
-          mapEmbedUrl,
+      RETURNING
+        ${projectFields}
+      `,
+      [
+        slug,
+        title,
+        location,
+        status,
+        price,
+        apartments,
+        deliveryDate,
+        coverImage,
+        description,
+        mapEmbedUrl,
+        JSON.stringify(projectImages),
+        JSON.stringify(apartmentUnits),
+      ]
+    )
 
-          JSON.stringify(
-            projectImages
-          ),
-
-          JSON.stringify(
-            apartmentUnits
-          ),
-        ]
-      );
-
-    res
-      .status(201)
-      .json(
-        result.rows[0]
-      );
+    res.status(201).json(
+      result.rows[0]
+    )
   } catch (error) {
-    if (
-      error.code === "23505"
-    ) {
-      return res
-        .status(409)
-        .json({
-          message:
-            "A project with this slug already exists",
-        });
+    if (error.code === "23505") {
+      return res.status(409).json({
+        message:
+          "A project with this slug already exists",
+      })
     }
 
     console.error(
       "Error creating project:",
       error
-    );
+    )
 
-    res
-      .status(500)
-      .json({
-        message:
-          "Server error",
-      });
+    res.status(500).json({
+      message: "Server error",
+    })
   }
 }
 
-async function updateProject(
-  req,
-  res
-) {
+
+// =====================================================
+// UPDATE PROJECT
+// =====================================================
+
+async function updateProject(req, res) {
   try {
-    const { slug } =
-      req.params;
+    const { slug } = req.params
 
     const {
       title,
@@ -240,132 +237,107 @@ async function updateProject(
       mapEmbedUrl,
       projectImages,
       apartmentUnits,
-    } = req.body;
+    } = req.body
 
-    const result =
-      await pool.query(
-        `
-        UPDATE projects
+    const result = await pool.query(
+      `
+      UPDATE projects
 
-        SET
-          title = $1,
-          location = $2,
-          status = $3,
-          price = $4,
-          apartments = $5,
-          delivery_date = $6,
-          cover_image = $7,
-          description = $8,
-          map_embed_url = $9,
-          project_images = $10,
-          apartment_units = $11
+      SET
+        title = $1,
+        location = $2,
+        status = $3,
+        price = $4,
+        apartments = $5,
+        delivery_date = $6,
+        cover_image = $7,
+        description = $8,
+        map_embed_url = $9,
+        project_images = $10,
+        apartment_units = $11
 
-        WHERE slug = $12
+      WHERE slug = $12
 
-        RETURNING
-          ${projectFields}
-        `,
-        [
-          title,
-          location,
-          status,
-          price,
-          apartments,
-          deliveryDate,
-          coverImage,
-          description,
-          mapEmbedUrl,
+      RETURNING
+        ${projectFields}
+      `,
+      [
+        title,
+        location,
+        status,
+        price,
+        apartments,
+        deliveryDate,
+        coverImage,
+        description,
+        mapEmbedUrl,
+        JSON.stringify(projectImages),
+        JSON.stringify(apartmentUnits),
+        slug,
+      ]
+    )
 
-          JSON.stringify(
-            projectImages
-          ),
-
-          JSON.stringify(
-            apartmentUnits
-          ),
-
-          slug,
-        ]
-      );
-
-    if (
-      result.rows.length === 0
-    ) {
-      return res
-        .status(404)
-        .json({
-          message:
-            "Project not found",
-        });
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        message: "Project not found",
+      })
     }
 
-    res.json(
-      result.rows[0]
-    );
+    res.json(result.rows[0])
   } catch (error) {
     console.error(
       "Error updating project:",
       error
-    );
+    )
 
-    res
-      .status(500)
-      .json({
-        message:
-          "Server error",
-      });
+    res.status(500).json({
+      message: "Server error",
+    })
   }
 }
 
-async function deleteProject(
-  req,
-  res
-) {
+
+// =====================================================
+// DELETE PROJECT
+// =====================================================
+
+async function deleteProject(req, res) {
   try {
-    const { slug } =
-      req.params;
+    const { slug } = req.params
 
-    const result =
-      await pool.query(
-        `
-        DELETE FROM projects
+    const result = await pool.query(
+      `
+      DELETE FROM projects
 
-        WHERE slug = $1
+      WHERE slug = $1
 
-        RETURNING id
-        `,
-        [slug]
-      );
+      RETURNING id
+      `,
+      [slug]
+    )
 
-    if (
-      result.rows.length === 0
-    ) {
-      return res
-        .status(404)
-        .json({
-          message:
-            "Project not found",
-        });
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        message: "Project not found",
+      })
     }
 
     res.json({
       message:
         "Project deleted successfully",
-    });
+    })
   } catch (error) {
     console.error(
       "Error deleting project:",
       error
-    );
+    )
 
-    res
-      .status(500)
-      .json({
-        message:
-          "Server error",
-      });
+    res.status(500).json({
+      message: "Server error",
+    })
   }
 }
+
 
 module.exports = {
   getAllProjects,
@@ -373,4 +345,4 @@ module.exports = {
   createProject,
   updateProject,
   deleteProject,
-};
+}
