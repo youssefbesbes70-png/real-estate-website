@@ -26,7 +26,7 @@ function Footer() {
         <div className="footer-column">
           <h3>CONTACT INFO</h3>
           <p>Tunis, Tunisia</p>
-          <p>+216 12 345 678</p>
+          <p>+216 22 250 152</p>
           <p>contact@dreambuild.com</p>
         </div>
 
