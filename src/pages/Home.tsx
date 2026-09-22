@@ -2,6 +2,23 @@ import { Helmet } from "react-helmet-async"
 import Hero from "../components/Hero"
 
 function Home() {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Archytas Immobilière",
+    url: "https://www.archytas-immobiliere.com",
+    logo: "https://www.archytas-immobiliere.com/archytas-logo.png",
+    description:
+      "Archytas Immobilière développe des projets immobiliers résidentiels modernes en Tunisie.",
+  }
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Archytas Immobilière",
+    url: "https://www.archytas-immobiliere.com",
+  }
+
   return (
     <>
       <Helmet>
@@ -38,6 +55,21 @@ function Home() {
           property="og:type"
           content="website"
         />
+
+        <meta
+          property="og:image"
+          content="https://www.archytas-immobiliere.com/archytas-logo.png"
+        />
+
+        {/* Structured data */}
+
+        <script type="application/ld+json">
+          {JSON.stringify(organizationSchema)}
+        </script>
+
+        <script type="application/ld+json">
+          {JSON.stringify(websiteSchema)}
+        </script>
       </Helmet>
 
       <div>
