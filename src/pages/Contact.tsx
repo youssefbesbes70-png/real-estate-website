@@ -9,9 +9,14 @@ function Contact() {
   const [subject, setSubject] = useState("")
   const [message, setMessage] = useState("")
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [error, setError] = useState("")
+  const [isSubmitting, setIsSubmitting] =
+    useState(false)
+
+  const [isSubmitted, setIsSubmitted] =
+    useState(false)
+
+  const [error, setError] =
+    useState("")
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
@@ -77,7 +82,6 @@ function Contact() {
       setEmail("")
       setSubject("")
       setMessage("")
-
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message)
@@ -93,10 +97,6 @@ function Contact() {
 
   return (
     <>
-      {/* =========================================
-          SEO
-      ========================================= */}
-
       <Helmet>
         <title>
           Contact | Archytas Immobilière
@@ -133,188 +133,194 @@ function Contact() {
         />
       </Helmet>
 
-
-      <div className="contact-page">
-
-        {/* =========================================
-            HERO
-        ========================================= */}
-
-        <section className="contact-hero">
-
-          <h1>
-            Contact Us
-          </h1>
-
-          <p>
-            Get in touch with our team for more
-            information about our projects,
-            availability, and apartment reservations.
-          </p>
-
-        </section>
-
-
-        {/* =========================================
-            CONTENT
-        ========================================= */}
-
-        <section className="contact-content">
-
-          {/* CONTACT INFORMATION */}
-
-          <div className="contact-info">
-
-            <h2>
-              Our Office
-            </h2>
-
-            <p>
-              <strong>
-                Phone:
-              </strong>{" "}
-              +216 12 345 678
+      <main className="contact-redesign">
+        <section className="contact-intro">
+          <div>
+            <p className="section-eyebrow">
+              CONTACT
             </p>
 
-            <p>
-              <strong>
-                Email:
-              </strong>{" "}
-              contact@dreambuild.com
-            </p>
-
-            <p>
-              <strong>
-                Address:
-              </strong>{" "}
-              Tunis, Tunisia
-            </p>
-
-
-            {/* MAP */}
-
-            <div className="contact-map">
-
-              <h3>
-                Find Us on the Map
-              </h3>
-
-              <iframe
-                src="https://www.google.com/maps?q=Tunis,Tunisia&output=embed"
-                width="100%"
-                height="300"
-                style={{
-                  border: 0,
-                }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Archytas Immobilière office location"
-              />
-
-            </div>
-
+            <h1>
+              Let's talk about
+              <span> your next home.</span>
+            </h1>
           </div>
 
-
-          {/* =========================================
-              CONTACT FORM
-          ========================================= */}
-
-          <form
-            className="contact-form"
-            onSubmit={handleSubmit}
-          >
-
-            <h2>
-              Send Us a Message
-            </h2>
-
-
-            <input
-              type="text"
-              placeholder="Your Name"
-              value={name}
-              onChange={(event) =>
-                setName(
-                  event.target.value
-                )
-              }
-              required
-            />
-
-
-            <input
-              type="email"
-              placeholder="Your Email"
-              value={email}
-              onChange={(event) =>
-                setEmail(
-                  event.target.value
-                )
-              }
-              required
-            />
-
-
-            <input
-              type="text"
-              placeholder="Subject"
-              value={subject}
-              onChange={(event) =>
-                setSubject(
-                  event.target.value
-                )
-              }
-              required
-            />
-
-
-            <textarea
-              placeholder="Your Message"
-              rows={6}
-              value={message}
-              onChange={(event) =>
-                setMessage(
-                  event.target.value
-                )
-              }
-              required
-            />
-
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting
-                ? "Sending..."
-                : "Send Message"}
-            </button>
-
-
-            {/* SUCCESS */}
-
-            {isSubmitted && (
-              <p className="success-message">
-                Your message has been sent successfully.
-              </p>
-            )}
-
-
-            {/* ERROR */}
-
-            {error && (
-              <p className="error-message">
-                {error}
-              </p>
-            )}
-
-          </form>
-
+          <p className="contact-intro-copy">
+            Have a question about one of our projects,
+            apartment availability, or the reservation
+            process? Our team is here to help.
+          </p>
         </section>
 
-      </div>
+        <section className="contact-details-strip">
+          <div>
+            <span>PHONE</span>
+
+            <a href="tel:+21612345678">
+              +216 12 345 678
+            </a>
+          </div>
+
+          <div>
+            <span>EMAIL</span>
+
+            <a href="mailto:contact@dreambuild.com">
+              contact@dreambuild.com
+            </a>
+          </div>
+
+          <div>
+            <span>OFFICE</span>
+
+            <p>
+              Tunis, Tunisia
+            </p>
+          </div>
+        </section>
+
+        <section className="contact-main">
+          <div className="contact-map-redesign">
+            <div className="contact-section-heading">
+              <p className="section-eyebrow">
+                OUR OFFICE
+              </p>
+
+              <h2>
+                Find us in Tunis.
+              </h2>
+            </div>
+
+            <iframe
+              src="https://www.google.com/maps?q=Tunis,Tunisia&output=embed"
+              width="100%"
+              height="560"
+              style={{
+                border: 0,
+              }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Archytas Immobilière office location"
+            />
+          </div>
+
+          <div className="contact-form-wrapper">
+            <div className="contact-section-heading">
+              <p className="section-eyebrow">
+                GET IN TOUCH
+              </p>
+
+              <h2>
+                Send us a message.
+              </h2>
+
+              <p>
+                Tell us what you're looking for and
+                our team will get back to you.
+              </p>
+            </div>
+
+            <form
+              className="contact-form-redesign"
+              onSubmit={handleSubmit}
+            >
+              <div className="contact-field">
+                <label htmlFor="contact-name">
+                  Your name
+                </label>
+
+                <input
+                  id="contact-name"
+                  type="text"
+                  value={name}
+                  onChange={(event) =>
+                    setName(event.target.value)
+                  }
+                  required
+                />
+              </div>
+
+              <div className="contact-field">
+                <label htmlFor="contact-email">
+                  Your email
+                </label>
+
+                <input
+                  id="contact-email"
+                  type="email"
+                  value={email}
+                  onChange={(event) =>
+                    setEmail(event.target.value)
+                  }
+                  required
+                />
+              </div>
+
+              <div className="contact-field">
+                <label htmlFor="contact-subject">
+                  Subject
+                </label>
+
+                <input
+                  id="contact-subject"
+                  type="text"
+                  value={subject}
+                  onChange={(event) =>
+                    setSubject(event.target.value)
+                  }
+                  required
+                />
+              </div>
+
+              <div className="contact-field">
+                <label htmlFor="contact-message">
+                  Message
+                </label>
+
+                <textarea
+                  id="contact-message"
+                  rows={6}
+                  value={message}
+                  onChange={(event) =>
+                    setMessage(event.target.value)
+                  }
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+              >
+                <span>
+                  {isSubmitting
+                    ? "Sending..."
+                    : "Send message"}
+                </span>
+
+                {!isSubmitting && (
+                  <span className="contact-submit-arrow">
+                    →
+                  </span>
+                )}
+              </button>
+
+              {isSubmitted && (
+                <p className="success-message">
+                  Your message has been sent successfully.
+                </p>
+              )}
+
+              {error && (
+                <p className="error-message">
+                  {error}
+                </p>
+              )}
+            </form>
+          </div>
+        </section>
+      </main>
     </>
   )
 }
