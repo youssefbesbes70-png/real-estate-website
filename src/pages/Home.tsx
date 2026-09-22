@@ -1,5 +1,9 @@
 import { Helmet } from "react-helmet-async"
 import Hero from "../components/Hero"
+import FeaturedProjects from "../components/FeaturedProjects"
+import HomeAbout from "../components/HomeAbout"
+import WhyArchytas from "../components/WhyArchytas"
+import HomeCTA from "../components/HomeCTA"
 
 function Home() {
   const organizationSchema = {
@@ -72,9 +76,13 @@ function Home() {
         </script>
       </Helmet>
 
-      <div>
+      <main>
         <Hero />
-      </div>
+        <FeaturedProjects />
+        <HomeAbout />
+        <WhyArchytas />
+        <HomeCTA />
+      </main>
     </>
   )
 }

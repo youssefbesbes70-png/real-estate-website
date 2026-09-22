@@ -5,16 +5,45 @@ function Hero() {
 
   return (
     <section className="hero">
+      <div className="hero-overlay" />
+
       <div className="hero-content">
-        <h2>We Build Spaces You Can Call Home</h2>
-        <p>
-          Discover our residential projects, built with quality and designed for
-          modern living.
+        <p className="hero-eyebrow">
+          ARCHYTAS IMMOBILIÈRE
         </p>
 
-        <button onClick={() => navigate("/projects")} className="hero-button">
-          Explore Projects
-        </button>
+        <h1>
+          We Build Spaces
+          <span> Made to Last.</span>
+        </h1>
+
+        <p className="hero-description">
+          Discover thoughtfully designed residential projects
+          combining modern architecture, quality construction,
+          and comfortable living.
+        </p>
+
+        <div className="hero-actions">
+          <button
+            className="hero-primary-button"
+            onClick={() => navigate("/projects")}
+          >
+            Explore Projects
+            <span>→</span>
+          </button>
+
+          <button
+            className="hero-secondary-button"
+            onClick={() => navigate("/contact")}
+          >
+            Contact Us
+          </button>
+        </div>
+
+        <div className="hero-scroll-indicator">
+          <span />
+          Discover Archytas
+        </div>
       </div>
     </section>
   )
