@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 function Hero() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <section className="hero">
@@ -9,18 +11,19 @@ function Hero() {
 
       <div className="hero-content">
         <p className="hero-eyebrow">
-          ARCHYTAS IMMOBILIÈRE
+          {t("hero.eyebrow")}
         </p>
 
         <h1>
-          We Build Spaces
-          <span> Made to Last.</span>
+          {t("hero.title1")}
+
+          <span>
+            {t("hero.title2")}
+          </span>
         </h1>
 
         <p className="hero-description">
-          Discover thoughtfully designed residential projects
-          combining modern architecture, quality construction,
-          and comfortable living.
+          {t("hero.description")}
         </p>
 
         <div className="hero-actions">
@@ -28,7 +31,7 @@ function Hero() {
             className="hero-primary-button"
             onClick={() => navigate("/projects")}
           >
-            Explore Projects
+            {t("hero.projects")}
             <span>→</span>
           </button>
 
@@ -36,13 +39,13 @@ function Hero() {
             className="hero-secondary-button"
             onClick={() => navigate("/contact")}
           >
-            Contact Us
+            {t("hero.contact")}
           </button>
         </div>
 
         <div className="hero-scroll-indicator">
           <span />
-          Discover Archytas
+          {t("hero.discover")}
         </div>
       </div>
     </section>

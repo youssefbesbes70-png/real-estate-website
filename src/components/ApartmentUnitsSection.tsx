@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next"
+
 type ApartmentUnit = {
   type: string
   images: string[]
@@ -16,12 +18,18 @@ type ApartmentUnitsSectionProps = {
   ) => void
 }
 
-function optimizeImage(imageUrl: string) {
+function optimizeImage(
+  imageUrl: string
+) {
   if (!imageUrl) {
     return ""
   }
 
-  if (imageUrl.includes("/image/upload/")) {
+  if (
+    imageUrl.includes(
+      "/image/upload/"
+    )
+  ) {
     return imageUrl.replace(
       "/image/upload/",
       "/image/upload/f_auto,q_auto,w_1000,c_limit/"
@@ -36,44 +44,65 @@ function ApartmentUnitsSection({
   apartmentUnits,
   onOpenLightbox,
 }: ApartmentUnitsSectionProps) {
-  const sortedApartmentUnits = apartmentUnits
-    .map((unit, originalIndex) => ({
-      unit,
-      originalIndex,
-    }))
-    .sort((a, b) => {
-      if (a.unit.available === b.unit.available) {
-        return 0
-      }
+  const { t } = useTranslation()
 
-      return a.unit.available ? -1 : 1
-    })
+  const sortedApartmentUnits =
+    apartmentUnits
+      .map(
+        (
+          unit,
+          originalIndex
+        ) => ({
+          unit,
+          originalIndex,
+        })
+      )
+      .sort((a, b) => {
+        if (
+          a.unit.available ===
+          b.unit.available
+        ) {
+          return 0
+        }
+
+        return a.unit.available
+          ? -1
+          : 1
+      })
 
   return (
     <section className="project-apartments">
-
       <div className="project-apartments-header">
         <div>
           <p className="project-section-eyebrow">
-            RESIDENCES
+            {t(
+              "projectDetails.residencesEyebrow"
+            )}
           </p>
 
           <h2>
-            Apartment types.
+            {t(
+              "projectDetails.apartmentTypesTitle"
+            )}
           </h2>
         </div>
 
         <p>
-          Explore the available layouts, surfaces,
-          plans, and interior views for {title}.
+          {t(
+            "projectDetails.apartmentTypesDescription",
+            {
+              title,
+            }
+          )}
         </p>
       </div>
 
-
       <div className="apartment-units-grid">
-
         {sortedApartmentUnits.map(
-          ({ unit, originalIndex }) => {
+          ({
+            unit,
+            originalIndex,
+          }) => {
             const firstImage =
               unit.images?.[0] || ""
 
@@ -89,14 +118,12 @@ function ApartmentUnitsSection({
                     : "apartment-unit-card apartment-unit-card-sold"
                 }
               >
-
-                {/* IMAGE */}
-
                 <div className="apartment-card-image">
-
                   {optimizedImage ? (
                     <img
-                      src={optimizedImage}
+                      src={
+                        optimizedImage
+                      }
                       alt={`${title} ${unit.type}`}
                       loading="lazy"
                       decoding="async"
@@ -110,15 +137,18 @@ function ApartmentUnitsSection({
                   ) : (
                     <div className="apartment-no-image">
                       <span>
-                        Interior images
+                        {t(
+                          "projectDetails.interiorImages"
+                        )}
                       </span>
 
                       <strong>
-                        Coming soon
+                        {t(
+                          "projectDetails.comingSoon"
+                        )}
                       </strong>
                     </div>
                   )}
-
 
                   <span
                     className={
@@ -128,21 +158,22 @@ function ApartmentUnitsSection({
                     }
                   >
                     {unit.available
-                      ? "Available"
-                      : "Sold"}
+                      ? t(
+                          "projectDetails.available"
+                        )
+                      : t(
+                          "projectDetails.soldOut"
+                        )}
                   </span>
-
                 </div>
 
-
-                {/* CONTENT */}
-
                 <div className="apartment-card-content">
-
                   <div className="apartment-card-heading">
                     <div>
                       <p>
-                        APARTMENT TYPE
+                        {t(
+                          "projectDetails.apartmentType"
+                        )}
                       </p>
 
                       <h3>
@@ -150,24 +181,31 @@ function ApartmentUnitsSection({
                       </h3>
                     </div>
 
-                    {unit.images.length > 0 && (
+                    {unit.images.length >
+                      0 && (
                       <span className="apartment-photo-count">
-                        {unit.images.length}{" "}
-                        {unit.images.length === 1
-                          ? "photo"
-                          : "photos"}
+                        {
+                          unit.images
+                            .length
+                        }{" "}
+                        {unit.images
+                          .length === 1
+                          ? t(
+                              "projectDetails.photo"
+                            )
+                          : t(
+                              "projectDetails.photos"
+                            )}
                       </span>
                     )}
                   </div>
 
-
-                  {/* DETAILS */}
-
                   <div className="apartment-card-details">
-
                     <div>
                       <span>
-                        Floor
+                        {t(
+                          "projectDetails.floor"
+                        )}
                       </span>
 
                       <strong>
@@ -177,52 +215,55 @@ function ApartmentUnitsSection({
 
                     <div>
                       <span>
-                        Surface
+                        {t(
+                          "projectDetails.surface"
+                        )}
                       </span>
 
                       <strong>
                         {unit.surface}
                       </strong>
                     </div>
-
                   </div>
 
-
-                  {/* ACTION */}
-
                   <div className="apartment-card-action">
-
                     {unit.available &&
                     unit.plan ? (
                       <a
-                        href={unit.plan}
+                        href={
+                          unit.plan
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        View floor plan
-                        <span>→</span>
+                        {t(
+                          "projectDetails.viewFloorPlan"
+                        )}
+
+                        <span>
+                          →
+                        </span>
                       </a>
                     ) : unit.available ? (
                       <span className="apartment-plan-unavailable">
-                        Plan coming soon
+                        {t(
+                          "projectDetails.planComingSoon"
+                        )}
                       </span>
                     ) : (
                       <span className="apartment-plan-unavailable">
-                        No longer available
+                        {t(
+                          "projectDetails.noLongerAvailable"
+                        )}
                       </span>
                     )}
-
                   </div>
-
                 </div>
-
               </article>
             )
           }
         )}
-
       </div>
-
     </section>
   )
 }

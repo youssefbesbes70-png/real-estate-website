@@ -2,6 +2,7 @@ import API_URL from "../config"
 
 import { useEffect, useState } from "react"
 import { Helmet } from "react-helmet-async"
+import { useTranslation } from "react-i18next"
 
 import ProjectCard from "../components/ProjectCard"
 
@@ -14,9 +15,16 @@ type Project = {
 }
 
 function Projects() {
-  const [projects, setProjects] = useState<Project[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+  const { t } = useTranslation()
+
+  const [projects, setProjects] =
+    useState<Project[]>([])
+
+  const [loading, setLoading] =
+    useState(true)
+
+  const [error, setError] =
+    useState("")
 
   useEffect(() => {
     const loadProjects = async () => {
@@ -30,7 +38,7 @@ function Projects() {
 
         if (!response.ok) {
           throw new Error(
-            "Unable to load projects."
+            t("projectsPage.errorMessage")
           )
         }
 
@@ -44,7 +52,7 @@ function Projects() {
         )
 
         setError(
-          "Unable to load projects. Please try again."
+          t("projectsPage.errorMessage")
         )
       } finally {
         setLoading(false)
@@ -52,28 +60,32 @@ function Projects() {
     }
 
     loadProjects()
-  }, [])
+  }, [t])
 
-  const availableProjects = projects.filter(
-    (project) =>
-      project.status === "available"
-  )
+  const availableProjects =
+    projects.filter(
+      (project) =>
+        project.status === "available"
+    )
 
-  const soldProjects = projects.filter(
-    (project) =>
-      project.status === "sold"
-  )
+  const soldProjects =
+    projects.filter(
+      (project) =>
+        project.status === "sold"
+    )
 
   return (
     <>
       <Helmet>
         <title>
-          Nos projets immobiliers | Archytas Immobilière
+          {t("seo.projects.title")}
         </title>
 
         <meta
           name="description"
-          content="Découvrez les projets immobiliers d'Archytas Immobilière, les appartements disponibles et nos résidences en Tunisie."
+          content={t(
+            "seo.projects.description"
+          )}
         />
 
         <link
@@ -83,12 +95,16 @@ function Projects() {
 
         <meta
           property="og:title"
-          content="Nos projets immobiliers | Archytas Immobilière"
+          content={t(
+            "seo.projects.title"
+          )}
         />
 
         <meta
           property="og:description"
-          content="Découvrez les projets et appartements proposés par Archytas Immobilière en Tunisie."
+          content={t(
+            "seo.projects.description"
+          )}
         />
 
         <meta
@@ -103,14 +119,12 @@ function Projects() {
       </Helmet>
 
       <div>
-        {/* =========================================
-            LOADING
-        ========================================= */}
-
         {loading && (
           <section className="projects-section">
             <h2>
-              Available Projects
+              {t(
+                "projectsPage.available"
+              )}
             </h2>
 
             <div className="projects-list">
@@ -121,14 +135,12 @@ function Projects() {
           </section>
         )}
 
-        {/* =========================================
-            ERROR
-        ========================================= */}
-
         {!loading && error && (
           <div className="projects-error">
             <h2>
-              Something went wrong
+              {t(
+                "projectsPage.errorTitle"
+              )}
             </h2>
 
             <p>
@@ -140,62 +152,90 @@ function Projects() {
                 window.location.reload()
               }
             >
-              Try Again
+              {t(
+                "projectsPage.retry"
+              )}
             </button>
           </div>
         )}
 
-        {/* =========================================
-            PROJECTS
-        ========================================= */}
-
-        {!loading && !error && (
-          <>
-            <section className="projects-section">
-              <h2>
-                Available Projects
-              </h2>
-
-              <div className="projects-list">
-                {availableProjects.map(
-                  (project) => (
-                    <ProjectCard
-                      key={project.slug}
-                      slug={project.slug}
-                      title={project.title}
-                      location={project.location}
-                      status={project.status}
-                      image={project.coverImage}
-                    />
-                  )
-                )}
-              </div>
-            </section>
-
-            {soldProjects.length > 0 && (
-              <section className="projects-section sold-section">
+        {!loading &&
+          !error && (
+            <>
+              <section className="projects-section">
                 <h2>
-                  Sold Projects
+                  {t(
+                    "projectsPage.available"
+                  )}
                 </h2>
 
                 <div className="projects-list">
-                  {soldProjects.map(
+                  {availableProjects.map(
                     (project) => (
                       <ProjectCard
-                        key={project.slug}
-                        slug={project.slug}
-                        title={project.title}
-                        location={project.location}
-                        status={project.status}
-                        image={project.coverImage}
+                        key={
+                          project.slug
+                        }
+                        slug={
+                          project.slug
+                        }
+                        title={
+                          project.title
+                        }
+                        location={
+                          project.location
+                        }
+                        status={
+                          project.status
+                        }
+                        image={
+                          project.coverImage
+                        }
                       />
                     )
                   )}
                 </div>
               </section>
-            )}
-          </>
-        )}
+
+              {soldProjects.length >
+                0 && (
+                <section className="projects-section sold-section">
+                  <h2>
+                    {t(
+                      "projectsPage.sold"
+                    )}
+                  </h2>
+
+                  <div className="projects-list">
+                    {soldProjects.map(
+                      (project) => (
+                        <ProjectCard
+                          key={
+                            project.slug
+                          }
+                          slug={
+                            project.slug
+                          }
+                          title={
+                            project.title
+                          }
+                          location={
+                            project.location
+                          }
+                          status={
+                            project.status
+                          }
+                          image={
+                            project.coverImage
+                          }
+                        />
+                      )
+                    )}
+                  </div>
+                </section>
+              )}
+            </>
+          )}
       </div>
     </>
   )
@@ -208,11 +248,8 @@ function ProjectSkeleton() {
 
       <div className="project-card-content">
         <div className="skeleton-line skeleton-title" />
-
         <div className="skeleton-line skeleton-location" />
-
         <div className="skeleton-line skeleton-status" />
-
         <div className="skeleton-button" />
       </div>
     </div>

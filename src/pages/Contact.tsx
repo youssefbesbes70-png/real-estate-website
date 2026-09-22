@@ -1,19 +1,33 @@
 import { useState } from "react"
 import { Helmet } from "react-helmet-async"
+import { useTranslation } from "react-i18next"
 
 import API_URL from "../config"
 
 function Contact() {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [subject, setSubject] = useState("")
-  const [message, setMessage] = useState("")
+  const { t } = useTranslation()
 
-  const [isSubmitting, setIsSubmitting] =
-    useState(false)
+  const [name, setName] =
+    useState("")
 
-  const [isSubmitted, setIsSubmitted] =
-    useState(false)
+  const [email, setEmail] =
+    useState("")
+
+  const [subject, setSubject] =
+    useState("")
+
+  const [message, setMessage] =
+    useState("")
+
+  const [
+    isSubmitting,
+    setIsSubmitting,
+  ] = useState(false)
+
+  const [
+    isSubmitted,
+    setIsSubmitted,
+  ] = useState(false)
 
   const [error, setError] =
     useState("")
@@ -28,31 +42,36 @@ function Contact() {
     setError("")
 
     try {
-      const response = await fetch(
-        `${API_URL}/api/contact`,
-        {
-          method: "POST",
+      const response =
+        await fetch(
+          `${API_URL}/api/contact`,
+          {
+            method: "POST",
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
 
-          body: JSON.stringify({
-            name,
-            email,
-            phone: "",
-            subject,
-            message,
-          }),
-        }
-      )
+            body: JSON.stringify({
+              name,
+              email,
+              phone: "",
+              subject,
+              message,
+            }),
+          }
+        )
 
-      const data = await response.json()
+      const data =
+        await response.json()
 
       if (!response.ok) {
         if (
           data.errors &&
-          Array.isArray(data.errors)
+          Array.isArray(
+            data.errors
+          )
         ) {
           const validationErrors =
             data.errors
@@ -72,7 +91,9 @@ function Contact() {
 
         throw new Error(
           data.message ||
-            "Something went wrong"
+            t(
+              "contactPage.genericError"
+            )
         )
       }
 
@@ -83,11 +104,17 @@ function Contact() {
       setSubject("")
       setMessage("")
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message)
+      if (
+        error instanceof Error
+      ) {
+        setError(
+          error.message
+        )
       } else {
         setError(
-          "Something went wrong. Please try again."
+          t(
+            "contactPage.genericError"
+          )
         )
       }
     } finally {
@@ -99,12 +126,16 @@ function Contact() {
     <>
       <Helmet>
         <title>
-          Contact | Archytas Immobilière
+          {t(
+            "seo.contact.title"
+          )}
         </title>
 
         <meta
           name="description"
-          content="Contactez Archytas Immobilière pour obtenir plus d'informations sur nos projets, nos appartements disponibles et nos résidences en Tunisie."
+          content={t(
+            "seo.contact.description"
+          )}
         />
 
         <link
@@ -114,12 +145,16 @@ function Contact() {
 
         <meta
           property="og:title"
-          content="Contact | Archytas Immobilière"
+          content={t(
+            "seo.contact.title"
+          )}
         />
 
         <meta
           property="og:description"
-          content="Contactez notre équipe pour obtenir plus d'informations sur les projets immobiliers et appartements Archytas Immobilière."
+          content={t(
+            "seo.contact.description"
+          )}
         />
 
         <meta
@@ -137,25 +172,38 @@ function Contact() {
         <section className="contact-intro">
           <div>
             <p className="section-eyebrow">
-              CONTACT
+              {t(
+                "contactPage.eyebrow"
+              )}
             </p>
 
             <h1>
-              Let's talk about
-              <span> your next home.</span>
+              {t(
+                "contactPage.title1"
+              )}
+
+              <span>
+                {t(
+                  "contactPage.title2"
+                )}
+              </span>
             </h1>
           </div>
 
           <p className="contact-intro-copy">
-            Have a question about one of our projects,
-            apartment availability, or the reservation
-            process? Our team is here to help.
+            {t(
+              "contactPage.intro"
+            )}
           </p>
         </section>
 
         <section className="contact-details-strip">
           <div>
-            <span>PHONE</span>
+            <span>
+              {t(
+                "contactPage.phone"
+              )}
+            </span>
 
             <a href="tel:+21612345678">
               +216 12 345 678
@@ -163,7 +211,11 @@ function Contact() {
           </div>
 
           <div>
-            <span>EMAIL</span>
+            <span>
+              {t(
+                "contactPage.email"
+              )}
+            </span>
 
             <a href="mailto:contact@dreambuild.com">
               contact@dreambuild.com
@@ -171,7 +223,11 @@ function Contact() {
           </div>
 
           <div>
-            <span>OFFICE</span>
+            <span>
+              {t(
+                "contactPage.office"
+              )}
+            </span>
 
             <p>
               Tunis, Tunisia
@@ -183,11 +239,15 @@ function Contact() {
           <div className="contact-map-redesign">
             <div className="contact-section-heading">
               <p className="section-eyebrow">
-                OUR OFFICE
+                {t(
+                  "contactPage.officeEyebrow"
+                )}
               </p>
 
               <h2>
-                Find us in Tunis.
+                {t(
+                  "contactPage.officeTitle"
+                )}
               </h2>
             </div>
 
@@ -208,34 +268,48 @@ function Contact() {
           <div className="contact-form-wrapper">
             <div className="contact-section-heading">
               <p className="section-eyebrow">
-                GET IN TOUCH
+                {t(
+                  "contactPage.formEyebrow"
+                )}
               </p>
 
               <h2>
-                Send us a message.
+                {t(
+                  "contactPage.formTitle"
+                )}
               </h2>
 
               <p>
-                Tell us what you're looking for and
-                our team will get back to you.
+                {t(
+                  "contactPage.formIntro"
+                )}
               </p>
             </div>
 
             <form
               className="contact-form-redesign"
-              onSubmit={handleSubmit}
+              onSubmit={
+                handleSubmit
+              }
             >
               <div className="contact-field">
                 <label htmlFor="contact-name">
-                  Your name
+                  {t(
+                    "contactPage.name"
+                  )}
                 </label>
 
                 <input
                   id="contact-name"
                   type="text"
                   value={name}
-                  onChange={(event) =>
-                    setName(event.target.value)
+                  onChange={(
+                    event
+                  ) =>
+                    setName(
+                      event.target
+                        .value
+                    )
                   }
                   required
                 />
@@ -243,15 +317,22 @@ function Contact() {
 
               <div className="contact-field">
                 <label htmlFor="contact-email">
-                  Your email
+                  {t(
+                    "contactPage.emailField"
+                  )}
                 </label>
 
                 <input
                   id="contact-email"
                   type="email"
                   value={email}
-                  onChange={(event) =>
-                    setEmail(event.target.value)
+                  onChange={(
+                    event
+                  ) =>
+                    setEmail(
+                      event.target
+                        .value
+                    )
                   }
                   required
                 />
@@ -259,15 +340,22 @@ function Contact() {
 
               <div className="contact-field">
                 <label htmlFor="contact-subject">
-                  Subject
+                  {t(
+                    "contactPage.subject"
+                  )}
                 </label>
 
                 <input
                   id="contact-subject"
                   type="text"
                   value={subject}
-                  onChange={(event) =>
-                    setSubject(event.target.value)
+                  onChange={(
+                    event
+                  ) =>
+                    setSubject(
+                      event.target
+                        .value
+                    )
                   }
                   required
                 />
@@ -275,15 +363,22 @@ function Contact() {
 
               <div className="contact-field">
                 <label htmlFor="contact-message">
-                  Message
+                  {t(
+                    "contactPage.message"
+                  )}
                 </label>
 
                 <textarea
                   id="contact-message"
                   rows={6}
                   value={message}
-                  onChange={(event) =>
-                    setMessage(event.target.value)
+                  onChange={(
+                    event
+                  ) =>
+                    setMessage(
+                      event.target
+                        .value
+                    )
                   }
                   required
                 />
@@ -291,12 +386,18 @@ function Contact() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={
+                  isSubmitting
+                }
               >
                 <span>
                   {isSubmitting
-                    ? "Sending..."
-                    : "Send message"}
+                    ? t(
+                        "contactPage.sending"
+                      )
+                    : t(
+                        "contactPage.send"
+                      )}
                 </span>
 
                 {!isSubmitting && (
@@ -308,7 +409,9 @@ function Contact() {
 
               {isSubmitted && (
                 <p className="success-message">
-                  Your message has been sent successfully.
+                  {t(
+                    "contactPage.success"
+                  )}
                 </p>
               )}
 

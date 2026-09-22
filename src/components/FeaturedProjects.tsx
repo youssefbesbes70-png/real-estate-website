@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 import API_URL from "../config"
 import ProjectCard from "./ProjectCard"
@@ -13,6 +14,8 @@ type Project = {
 }
 
 function FeaturedProjects() {
+  const { t } = useTranslation()
+
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -51,26 +54,24 @@ function FeaturedProjects() {
       <div className="featured-projects-header">
         <div>
           <p className="section-eyebrow">
-            OUR PROJECTS
+            {t("featured.eyebrow")}
           </p>
 
           <h2>
-            Selected Developments
+            {t("featured.title")}
           </h2>
         </div>
 
         <div className="featured-projects-intro">
           <p>
-            Explore residences designed around
-            contemporary architecture, thoughtful
-            details, and comfortable living.
+            {t("featured.description")}
           </p>
 
           <Link
             to="/projects"
             className="view-all-projects"
           >
-            View all projects
+            {t("featured.all")}
             <span>→</span>
           </Link>
         </div>

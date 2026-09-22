@@ -1,44 +1,49 @@
-const reasons = [
-  {
-    number: "01",
-    title: "Quality",
-    text: "Carefully selected materials and attention to execution at every stage of development.",
-  },
-  {
-    number: "02",
-    title: "Architecture",
-    text: "Contemporary residential spaces designed around comfort, function, and everyday living.",
-  },
-  {
-    number: "03",
-    title: "Location",
-    text: "Projects selected with accessibility, lifestyle, and long-term value in mind.",
-  },
-  {
-    number: "04",
-    title: "Commitment",
-    text: "A clear and reliable approach from project development through to final delivery.",
-  },
-]
+import { useTranslation } from "react-i18next"
 
 function WhyArchytas() {
+  const { t } = useTranslation()
+
+  const reasons = [
+    {
+      number: "01",
+      title: t("why.quality"),
+      text: t("why.qualityText"),
+    },
+    {
+      number: "02",
+      title: t("why.architecture"),
+      text: t("why.architectureText"),
+    },
+    {
+      number: "03",
+      title: t("why.location"),
+      text: t("why.locationText"),
+    },
+    {
+      number: "04",
+      title: t("why.commitment"),
+      text: t("why.commitmentText"),
+    },
+  ]
+
   return (
     <section className="why-archytas">
       <div className="why-archytas-header">
         <div>
           <p className="section-eyebrow">
-            WHY ARCHYTAS
+            {t("why.eyebrow")}
           </p>
 
           <h2>
-            Built around
-            <span> what matters.</span>
+            {t("why.title1")}
+            <span>
+              {t("why.title2")}
+            </span>
           </h2>
         </div>
 
         <p className="why-archytas-intro">
-          We focus on the details that create better places to live,
-          from architecture and materials to location and delivery.
+          {t("why.intro")}
         </p>
       </div>
 

@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react"
+import {
+  useEffect,
+  useState,
+} from "react"
+
+import { useTranslation } from "react-i18next"
 
 type ProjectHeroSliderProps = {
   title: string
   projectImages: string[]
 }
 
-// Create an optimized Cloudinary URL
 function optimizeImage(
   imageUrl: string,
   width: number
@@ -14,7 +18,11 @@ function optimizeImage(
     return ""
   }
 
-  if (imageUrl.includes("/image/upload/")) {
+  if (
+    imageUrl.includes(
+      "/image/upload/"
+    )
+  ) {
     return imageUrl.replace(
       "/image/upload/",
       `/image/upload/f_auto,q_auto,w_${width},c_limit/`
@@ -28,10 +36,13 @@ function ProjectHeroSlider({
   title,
   projectImages,
 }: ProjectHeroSliderProps) {
-  const [currentImageIndex, setCurrentImageIndex] =
-    useState(0)
+  const { t } = useTranslation()
 
-  // No images
+  const [
+    currentImageIndex,
+    setCurrentImageIndex,
+  ] = useState(0)
+
   if (
     !projectImages ||
     projectImages.length === 0
@@ -40,37 +51,53 @@ function ProjectHeroSlider({
   }
 
   const currentImage =
-    projectImages[currentImageIndex]
+    projectImages[
+      currentImageIndex
+    ]
 
   const optimized800 =
-    optimizeImage(currentImage, 800)
+    optimizeImage(
+      currentImage,
+      800
+    )
 
   const optimized1200 =
-    optimizeImage(currentImage, 1200)
+    optimizeImage(
+      currentImage,
+      1200
+    )
 
   const optimized1600 =
-    optimizeImage(currentImage, 1600)
-
-  const goToPreviousImage = () => {
-    setCurrentImageIndex((current) =>
-      current === 0
-        ? projectImages.length - 1
-        : current - 1
+    optimizeImage(
+      currentImage,
+      1600
     )
-  }
+
+  const goToPreviousImage =
+    () => {
+      setCurrentImageIndex(
+        (current) =>
+          current === 0
+            ? projectImages.length -
+              1
+            : current - 1
+      )
+    }
 
   const goToNextImage = () => {
-    setCurrentImageIndex((current) =>
-      current === projectImages.length - 1
-        ? 0
-        : current + 1
+    setCurrentImageIndex(
+      (current) =>
+        current ===
+        projectImages.length - 1
+          ? 0
+          : current + 1
     )
   }
 
-  // Preload only the next image.
-  // We do NOT download the entire gallery immediately.
   useEffect(() => {
-    if (projectImages.length <= 1) {
+    if (
+      projectImages.length <= 1
+    ) {
       return
     }
 
@@ -80,12 +107,16 @@ function ProjectHeroSlider({
         ? 0
         : currentImageIndex + 1
 
-    const nextImage = new Image()
+    const nextImage =
+      new Image()
 
-    nextImage.src = optimizeImage(
-      projectImages[nextIndex],
-      1600
-    )
+    nextImage.src =
+      optimizeImage(
+        projectImages[
+          nextIndex
+        ],
+        1600
+      )
   }, [
     currentImageIndex,
     projectImages,
@@ -93,12 +124,16 @@ function ProjectHeroSlider({
 
   return (
     <div className="image-slider">
-
-      {projectImages.length > 1 && (
+      {projectImages.length >
+        1 && (
         <button
           className="slider-button left"
-          onClick={goToPreviousImage}
-          aria-label="Previous project image"
+          onClick={
+            goToPreviousImage
+          }
+          aria-label={t(
+            "projectDetails.previousImage"
+          )}
         >
           ←
         </button>
@@ -106,40 +141,38 @@ function ProjectHeroSlider({
 
       <img
         className="project-details-image"
-
         src={optimized1600}
-
         srcSet={`
           ${optimized800} 800w,
           ${optimized1200} 1200w,
           ${optimized1600} 1600w
         `}
-
         sizes="100vw"
-
         alt={`${title} exterior ${
           currentImageIndex + 1
         }`}
-
         loading={
           currentImageIndex === 0
             ? "eager"
             : "lazy"
         }
-
         decoding="async"
       />
 
-      {projectImages.length > 1 && (
+      {projectImages.length >
+        1 && (
         <button
           className="slider-button right"
-          onClick={goToNextImage}
-          aria-label="Next project image"
+          onClick={
+            goToNextImage
+          }
+          aria-label={t(
+            "projectDetails.nextImage"
+          )}
         >
           →
         </button>
       )}
-
     </div>
   )
 }

@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 function HomeAbout() {
+  const { t } = useTranslation()
+
   return (
     <section className="home-about">
       <div className="home-about-image">
@@ -13,47 +16,45 @@ function HomeAbout() {
 
       <div className="home-about-content">
         <p className="home-about-eyebrow">
-          ABOUT ARCHYTAS
+          {t("aboutHome.eyebrow")}
         </p>
 
         <h2>
-          Building with purpose.
-          <span> Designing for everyday life.</span>
+          {t("aboutHome.title1")}
+          <span>{t("aboutHome.title2")}</span>
         </h2>
 
         <p className="home-about-description">
-          Archytas Immobilière develops contemporary residential
-          projects with a focus on architecture, quality, comfort,
-          and long-term value.
+          {t("aboutHome.description")}
         </p>
 
         <Link
           to="/about"
           className="home-about-link"
         >
-          Discover our story
+          {t("aboutHome.story")}
           <span>→</span>
         </Link>
 
         <div className="home-about-stats">
           <div>
             <strong>10+</strong>
-            <span>Years of experience</span>
+            <span>{t("aboutHome.years")}</span>
           </div>
 
           <div>
             <strong>15</strong>
-            <span>Projects completed</span>
+            <span>{t("aboutHome.projects")}</span>
           </div>
 
           <div>
             <strong>300+</strong>
-            <span>Satisfied clients</span>
+            <span>{t("aboutHome.clients")}</span>
           </div>
 
           <div>
             <strong>500+</strong>
-            <span>Apartments delivered</span>
+            <span>{t("aboutHome.apartments")}</span>
           </div>
         </div>
       </div>

@@ -1,22 +1,26 @@
 import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 function HomeCTA() {
+  const { t } = useTranslation()
+
   return (
     <section className="home-cta">
       <div className="home-cta-inner">
         <div className="home-cta-copy">
           <p className="home-cta-eyebrow">
-            YOUR NEXT HOME
+            {t("homeCta.eyebrow")}
           </p>
 
           <h2>
-            Looking for a place
-            <span> that feels right?</span>
+            {t("homeCta.title1")}
+            <span>
+              {t("homeCta.title2")}
+            </span>
           </h2>
 
           <p>
-            Discover our available residences or speak directly with
-            our team about your next property.
+            {t("homeCta.description")}
           </p>
         </div>
 
@@ -25,7 +29,7 @@ function HomeCTA() {
             to="/projects"
             className="home-cta-primary"
           >
-            Explore Projects
+            {t("homeCta.projects")}
             <span>→</span>
           </Link>
 
@@ -33,7 +37,7 @@ function HomeCTA() {
             to="/contact"
             className="home-cta-secondary"
           >
-            Contact Us
+            {t("homeCta.contact")}
           </Link>
         </div>
       </div>

@@ -1,4 +1,6 @@
 import { Helmet } from "react-helmet-async"
+import { useTranslation } from "react-i18next"
+
 import Hero from "../components/Hero"
 import FeaturedProjects from "../components/FeaturedProjects"
 import HomeAbout from "../components/HomeAbout"
@@ -6,6 +8,8 @@ import WhyArchytas from "../components/WhyArchytas"
 import HomeCTA from "../components/HomeCTA"
 
 function Home() {
+  const { t } = useTranslation()
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -27,12 +31,12 @@ function Home() {
     <>
       <Helmet>
         <title>
-          Archytas Immobilière | Projets immobiliers en Tunisie
+          {t("seo.home.title")}
         </title>
 
         <meta
           name="description"
-          content="Découvrez les projets immobiliers d'Archytas Immobilière, nos résidences et appartements disponibles en Tunisie."
+          content={t("seo.home.description")}
         />
 
         <link
@@ -42,12 +46,12 @@ function Home() {
 
         <meta
           property="og:title"
-          content="Archytas Immobilière | Projets immobiliers en Tunisie"
+          content={t("seo.home.title")}
         />
 
         <meta
           property="og:description"
-          content="Découvrez les projets immobiliers d'Archytas Immobilière et nos appartements disponibles en Tunisie."
+          content={t("seo.home.description")}
         />
 
         <meta
@@ -64,8 +68,6 @@ function Home() {
           property="og:image"
           content="https://www.archytas-immobiliere.com/archytas-logo.png"
         />
-
-        {/* Structured data */}
 
         <script type="application/ld+json">
           {JSON.stringify(organizationSchema)}

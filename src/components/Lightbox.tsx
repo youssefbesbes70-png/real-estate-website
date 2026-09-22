@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import { useTranslation } from "react-i18next"
 
 type ApartmentUnit = {
   type: string
@@ -13,14 +14,11 @@ type LightboxProps = {
   title: string
   apartment: ApartmentUnit
   imageIndex: number
-  setImageIndex: (index: number) => void
+  setImageIndex: (
+    index: number
+  ) => void
   onClose: () => void
 }
-
-
-// =====================================================
-// CLOUDINARY OPTIMIZATION
-// =====================================================
 
 function optimizeImage(
   imageUrl: string,
@@ -30,7 +28,11 @@ function optimizeImage(
     return ""
   }
 
-  if (imageUrl.includes("/image/upload/")) {
+  if (
+    imageUrl.includes(
+      "/image/upload/"
+    )
+  ) {
     return imageUrl.replace(
       "/image/upload/",
       `/image/upload/f_auto,q_auto,w_${width},c_limit/`
@@ -40,7 +42,6 @@ function optimizeImage(
   return imageUrl
 }
 
-
 function Lightbox({
   title,
   apartment,
@@ -48,51 +49,63 @@ function Lightbox({
   setImageIndex,
   onClose,
 }: LightboxProps) {
-  const images = apartment.images || []
+  const { t } = useTranslation()
 
-  const goToPreviousImage = () => {
-    if (images.length === 0) {
-      return
+  const images =
+    apartment.images || []
+
+  const goToPreviousImage =
+    () => {
+      if (
+        images.length === 0
+      ) {
+        return
+      }
+
+      setImageIndex(
+        imageIndex === 0
+          ? images.length - 1
+          : imageIndex - 1
+      )
     }
 
-    setImageIndex(
-      imageIndex === 0
-        ? images.length - 1
-        : imageIndex - 1
-    )
-  }
+  const goToNextImage =
+    () => {
+      if (
+        images.length === 0
+      ) {
+        return
+      }
 
-
-  const goToNextImage = () => {
-    if (images.length === 0) {
-      return
+      setImageIndex(
+        imageIndex ===
+          images.length - 1
+          ? 0
+          : imageIndex + 1
+      )
     }
-
-    setImageIndex(
-      imageIndex === images.length - 1
-        ? 0
-        : imageIndex + 1
-    )
-  }
-
-
-  // =====================================================
-  // KEYBOARD CONTROLS
-  // =====================================================
 
   useEffect(() => {
     const handleKeyDown = (
       event: KeyboardEvent
     ) => {
-      if (event.key === "Escape") {
+      if (
+        event.key === "Escape"
+      ) {
         onClose()
       }
 
-      if (event.key === "ArrowLeft") {
+      if (
+        event.key ===
+        "ArrowLeft"
+      ) {
         goToPreviousImage()
       }
 
-      if (event.key === "ArrowRight") {
+      if (
+        event.key ===
+        "ArrowRight"
+      ) {
         goToNextImage()
       }
     }
@@ -108,40 +121,42 @@ function Lightbox({
         handleKeyDown
       )
     }
-  }, [imageIndex, images.length])
-
-
-  // =====================================================
-  // PRELOAD NEXT IMAGE
-  // =====================================================
+  }, [
+    imageIndex,
+    images.length,
+  ])
 
   useEffect(() => {
-    if (images.length <= 1) {
+    if (
+      images.length <= 1
+    ) {
       return
     }
 
     const nextIndex =
-      imageIndex === images.length - 1
+      imageIndex ===
+      images.length - 1
         ? 0
         : imageIndex + 1
 
-    const nextImage = new Image()
+    const nextImage =
+      new Image()
 
-    nextImage.src = optimizeImage(
-      images[nextIndex],
-      1600
-    )
-  }, [imageIndex, images])
+    nextImage.src =
+      optimizeImage(
+        images[nextIndex],
+        1600
+      )
+  }, [
+    imageIndex,
+    images,
+  ])
 
-
-  // =====================================================
-  // NO IMAGES
-  // =====================================================
-
-  if (images.length === 0) {
+  if (
+    images.length === 0
+  ) {
     return null
   }
-
 
   const currentImage =
     images[imageIndex]
@@ -164,21 +179,19 @@ function Lightbox({
       2000
     )
 
-
   return (
     <div
       className="lightbox-overlay"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={`${title} ${apartment.type} image gallery`}
+      aria-label={`${title} ${apartment.type}`}
     >
-
-      {/* CLOSE */}
-
       <button
         className="lightbox-close"
-        aria-label="Close image gallery"
+        aria-label={t(
+          "projectDetails.closeGallery"
+        )}
         onClick={(event) => {
           event.stopPropagation()
           onClose()
@@ -187,13 +200,12 @@ function Lightbox({
         ×
       </button>
 
-
-      {/* LEFT ARROW */}
-
       {images.length > 1 && (
         <button
           className="lightbox-arrow left"
-          aria-label="Previous image"
+          aria-label={t(
+            "projectDetails.previousImage"
+          )}
           onClick={(event) => {
             event.stopPropagation()
             goToPreviousImage()
@@ -203,9 +215,6 @@ function Lightbox({
         </button>
       )}
 
-
-      {/* CONTENT */}
-
       <div
         className="lightbox-content"
         onClick={(event) =>
@@ -213,47 +222,39 @@ function Lightbox({
         }
       >
         <h3 className="lightbox-title">
-          {title} - {apartment.type}
+          {title} -{" "}
+          {apartment.type}
         </h3>
-
 
         <img
           className="lightbox-image"
-
           src={optimized1600}
-
           srcSet={`
             ${optimized1200} 1200w,
             ${optimized1600} 1600w,
             ${optimized2000} 2000w
           `}
-
           sizes="90vw"
-
           alt={`${title} ${
             apartment.type
           } interior ${
             imageIndex + 1
           }`}
-
           decoding="async"
         />
-
 
         <p className="lightbox-counter">
           {imageIndex + 1} /{" "}
           {images.length}
         </p>
-
       </div>
-
-
-      {/* RIGHT ARROW */}
 
       {images.length > 1 && (
         <button
           className="lightbox-arrow right"
-          aria-label="Next image"
+          aria-label={t(
+            "projectDetails.nextImage"
+          )}
           onClick={(event) => {
             event.stopPropagation()
             goToNextImage()
@@ -262,7 +263,6 @@ function Lightbox({
           →
         </button>
       )}
-
     </div>
   )
 }

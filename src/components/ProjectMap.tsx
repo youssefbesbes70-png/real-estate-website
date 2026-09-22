@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next"
+
 type ProjectMapProps = {
   title: string
   mapEmbedUrl: string
@@ -7,6 +9,8 @@ function ProjectMap({
   title,
   mapEmbedUrl,
 }: ProjectMapProps) {
+  const { t } = useTranslation()
+
   if (!mapEmbedUrl) {
     return null
   }
@@ -16,17 +20,25 @@ function ProjectMap({
       <div className="project-map-header">
         <div>
           <p className="project-section-eyebrow">
-            LOCATION
+            {t(
+              "projectDetails.locationEyebrow"
+            )}
           </p>
 
           <h2>
-            Explore the neighborhood.
+            {t(
+              "projectDetails.locationTitle"
+            )}
           </h2>
         </div>
 
         <p>
-          Discover the location of {title} and its
-          surroundings.
+          {t(
+            "projectDetails.locationDescription",
+            {
+              title,
+            }
+          )}
         </p>
       </div>
 

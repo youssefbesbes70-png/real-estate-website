@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 type ProjectCardProps = {
   slug: string
@@ -30,6 +31,8 @@ function ProjectCard({
   status,
   image,
 }: ProjectCardProps) {
+  const { t } = useTranslation()
+
   const optimizedImage = optimizeImage(image)
 
   return (
@@ -54,7 +57,9 @@ function ProjectCard({
               : "project-badge project-badge-available"
           }
         >
-          {status === "sold" ? "Sold" : "Available"}
+          {status === "sold"
+            ? t("projectCard.sold")
+            : t("projectCard.available")}
         </span>
       </div>
 
@@ -69,7 +74,7 @@ function ProjectCard({
 
         <div className="project-card-footer">
           <span>
-            Discover Project
+            {t("projectCard.discover")}
           </span>
 
           <span className="project-card-arrow">

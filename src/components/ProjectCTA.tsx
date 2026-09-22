@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 type ProjectCTAProps = {
   title: string
@@ -7,22 +8,36 @@ type ProjectCTAProps = {
 function ProjectCTA({
   title,
 }: ProjectCTAProps) {
+  const { t } = useTranslation()
+
   return (
     <section className="project-cta">
       <div className="project-cta-content">
         <p className="project-section-eyebrow">
-          INTERESTED IN THIS PROJECT?
+          {t(
+            "projectCta.eyebrow"
+          )}
         </p>
 
         <h2>
-          Make {title}
-          <span> your next home.</span>
+          {t(
+            "projectCta.title1",
+            {
+              title,
+            }
+          )}
+
+          <span>
+            {t(
+              "projectCta.title2"
+            )}
+          </span>
         </h2>
 
         <p>
-          Contact our team for more information about
-          availability, apartment types, plans, and the
-          reservation process.
+          {t(
+            "projectCta.description"
+          )}
         </p>
       </div>
 
@@ -31,15 +46,22 @@ function ProjectCTA({
           to="/contact"
           className="project-cta-primary"
         >
-          Contact our team
-          <span>→</span>
+          {t(
+            "projectCta.contact"
+          )}
+
+          <span>
+            →
+          </span>
         </Link>
 
         <Link
           to="/projects"
           className="project-cta-secondary"
         >
-          View other projects
+          {t(
+            "projectCta.otherProjects"
+          )}
         </Link>
       </div>
     </section>

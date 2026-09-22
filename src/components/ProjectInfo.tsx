@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next"
+
 type ApartmentUnit = {
   type: string
   images: string[]
@@ -26,7 +28,11 @@ type ProjectInfoProps = {
   project: Project
 }
 
-function ProjectInfo({ project }: ProjectInfoProps) {
+function ProjectInfo({
+  project,
+}: ProjectInfoProps) {
+  const { t } = useTranslation()
+
   return (
     <section className="project-info">
       <div className="project-info-header">
@@ -48,36 +54,63 @@ function ProjectInfo({ project }: ProjectInfoProps) {
           }
         >
           {project.status === "sold"
-            ? "Sold Out"
-            : "Available"}
+            ? t("projectDetails.soldOut")
+            : t("projectDetails.available")}
         </span>
       </div>
 
       <div className="project-facts">
         <div className="project-fact">
-          <span>Starting price</span>
-          <strong>{project.price}</strong>
+          <span>
+            {t(
+              "projectDetails.startingPrice"
+            )}
+          </span>
+
+          <strong>
+            {project.price}
+          </strong>
         </div>
 
         <div className="project-fact">
-          <span>Apartments</span>
-          <strong>{project.apartments}</strong>
+          <span>
+            {t(
+              "projectDetails.apartments"
+            )}
+          </span>
+
+          <strong>
+            {project.apartments}
+          </strong>
         </div>
 
         <div className="project-fact">
-          <span>Delivery</span>
-          <strong>{project.deliveryDate}</strong>
+          <span>
+            {t(
+              "projectDetails.delivery"
+            )}
+          </span>
+
+          <strong>
+            {project.deliveryDate}
+          </strong>
         </div>
       </div>
 
       <div className="project-about">
-        <p className="project-section-eyebrow">
-          ABOUT THE PROJECT
-        </p>
+        <div>
+          <p className="project-section-eyebrow">
+            {t(
+              "projectDetails.aboutEyebrow"
+            )}
+          </p>
 
-        <h2>
-          Designed for modern living.
-        </h2>
+          <h2>
+            {t(
+              "projectDetails.aboutTitle"
+            )}
+          </h2>
+        </div>
 
         <p className="project-description">
           {project.description}
