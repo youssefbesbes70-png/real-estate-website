@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const sitemapRoutes =
+  require("./routes/sitemapRoutes")
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -103,6 +105,10 @@ app.use(
   contactRoutes
 );
 
+app.use(
+  "/sitemap.xml",
+  sitemapRoutes
+)
 
 // ======================================================
 // API 404
