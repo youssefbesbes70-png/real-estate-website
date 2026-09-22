@@ -16,11 +16,6 @@ type ApartmentUnitsSectionProps = {
   ) => void
 }
 
-
-// =====================================================
-// CLOUDINARY IMAGE OPTIMIZATION
-// =====================================================
-
 function optimizeImage(imageUrl: string) {
   if (!imageUrl) {
     return ""
@@ -29,84 +24,101 @@ function optimizeImage(imageUrl: string) {
   if (imageUrl.includes("/image/upload/")) {
     return imageUrl.replace(
       "/image/upload/",
-      "/image/upload/f_auto,q_auto,w_800,c_limit/"
+      "/image/upload/f_auto,q_auto,w_1000,c_limit/"
     )
   }
 
   return imageUrl
 }
 
-
 function ApartmentUnitsSection({
   title,
   apartmentUnits,
   onOpenLightbox,
 }: ApartmentUnitsSectionProps) {
+  const sortedApartmentUnits = apartmentUnits
+    .map((unit, originalIndex) => ({
+      unit,
+      originalIndex,
+    }))
+    .sort((a, b) => {
+      if (a.unit.available === b.unit.available) {
+        return 0
+      }
 
-  // Keep the ORIGINAL index.
-  // This is important for the lightbox.
-  const sortedApartmentUnits =
-    apartmentUnits
-      .map((unit, originalIndex) => ({
-        unit,
-        originalIndex,
-      }))
-      .sort((a, b) => {
-        if (
-          a.unit.available ===
-          b.unit.available
-        ) {
-          return 0
-        }
-
-        return a.unit.available
-          ? -1
-          : 1
-      })
-
+      return a.unit.available ? -1 : 1
+    })
 
   return (
-    <div className="project-gallery">
+    <section className="project-apartments">
 
-      <h2>
-        Apartment Interior Views
-      </h2>
+      <div className="project-apartments-header">
+        <div>
+          <p className="project-section-eyebrow">
+            RESIDENCES
+          </p>
+
+          <h2>
+            Apartment types.
+          </h2>
+        </div>
+
+        <p>
+          Explore the available layouts, surfaces,
+          plans, and interior views for {title}.
+        </p>
+      </div>
 
 
       <div className="apartment-units-grid">
 
         {sortedApartmentUnits.map(
-          ({
-            unit,
-            originalIndex,
-          }) => {
-
+          ({ unit, originalIndex }) => {
             const firstImage =
               unit.images?.[0] || ""
 
             const optimizedImage =
               optimizeImage(firstImage)
 
-
             return (
-              <div
+              <article
                 key={originalIndex}
-                className={`apartment-unit-card ${
+                className={
                   unit.available
-                    ? ""
-                    : "apartment-unit-card-sold"
-                }`}
+                    ? "apartment-unit-card"
+                    : "apartment-unit-card apartment-unit-card-sold"
+                }
               >
 
-                {/* =========================
-                    HEADER
-                ========================= */}
+                {/* IMAGE */}
 
-                <div className="apartment-unit-header">
+                <div className="apartment-card-image">
 
-                  <h3>
-                    {unit.type}
-                  </h3>
+                  {optimizedImage ? (
+                    <img
+                      src={optimizedImage}
+                      alt={`${title} ${unit.type}`}
+                      loading="lazy"
+                      decoding="async"
+                      onClick={() =>
+                        onOpenLightbox(
+                          originalIndex,
+                          0
+                        )
+                      }
+                    />
+                  ) : (
+                    <div className="apartment-no-image">
+                      <span>
+                        Interior images
+                      </span>
+
+                      <strong>
+                        Coming soon
+                      </strong>
+                    </div>
+                  )}
+
 
                   <span
                     className={
@@ -123,95 +135,95 @@ function ApartmentUnitsSection({
                 </div>
 
 
-                {/* =========================
-                    IMAGE
-                ========================= */}
+                {/* CONTENT */}
 
-                {optimizedImage && (
-                  <img
-                    src={optimizedImage}
+                <div className="apartment-card-content">
 
-                    alt={`${title} ${unit.type}`}
+                  <div className="apartment-card-heading">
+                    <div>
+                      <p>
+                        APARTMENT TYPE
+                      </p>
 
-                    className="gallery-image"
+                      <h3>
+                        {unit.type}
+                      </h3>
+                    </div>
 
-                    loading="lazy"
-
-                    decoding="async"
-
-                    onClick={() =>
-                      onOpenLightbox(
-                        originalIndex,
-                        0
-                      )
-                    }
-                  />
-                )}
+                    {unit.images.length > 0 && (
+                      <span className="apartment-photo-count">
+                        {unit.images.length}{" "}
+                        {unit.images.length === 1
+                          ? "photo"
+                          : "photos"}
+                      </span>
+                    )}
+                  </div>
 
 
-                {/* =========================
-                    DETAILS
-                ========================= */}
+                  {/* DETAILS */}
 
-                <div className="apartment-unit-details">
+                  <div className="apartment-card-details">
 
-                  <p>
-                    <strong>
-                      Floor:
-                    </strong>{" "}
-                    {unit.floor}
-                  </p>
+                    <div>
+                      <span>
+                        Floor
+                      </span>
 
-                  <p>
-                    <strong>
-                      Surface:
-                    </strong>{" "}
-                    {unit.surface}
-                  </p>
+                      <strong>
+                        {unit.floor}
+                      </strong>
+                    </div>
 
-                  <p className="apartment-image-count">
-                    {unit.images.length}{" "}
-                    {unit.images.length === 1
-                      ? "interior photo"
-                      : "interior photos"}
-                  </p>
+                    <div>
+                      <span>
+                        Surface
+                      </span>
+
+                      <strong>
+                        {unit.surface}
+                      </strong>
+                    </div>
+
+                  </div>
+
+
+                  {/* ACTION */}
+
+                  <div className="apartment-card-action">
+
+                    {unit.available &&
+                    unit.plan ? (
+                      <a
+                        href={unit.plan}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View floor plan
+                        <span>→</span>
+                      </a>
+                    ) : unit.available ? (
+                      <span className="apartment-plan-unavailable">
+                        Plan coming soon
+                      </span>
+                    ) : (
+                      <span className="apartment-plan-unavailable">
+                        No longer available
+                      </span>
+                    )}
+
+                  </div>
 
                 </div>
 
-
-                {/* =========================
-                    PLAN
-                ========================= */}
-
-                {unit.available &&
-                unit.plan ? (
-                  <a
-                    href={unit.plan}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="plan-button"
-                  >
-                    View Plan
-                  </a>
-                ) : (
-                  <button
-                    className="plan-button disabled-plan-button"
-                    disabled
-                  >
-                    {unit.available
-                      ? "Plan unavailable"
-                      : "Sold Out"}
-                  </button>
-                )}
-
-              </div>
+              </article>
             )
           }
         )}
 
       </div>
 
-    </div>
+    </section>
   )
 }
 

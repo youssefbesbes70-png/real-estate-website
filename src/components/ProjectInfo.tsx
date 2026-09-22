@@ -6,6 +6,7 @@ type ApartmentUnit = {
   floor: string
   surface: string
 }
+
 type Project = {
   slug: string
   title: string
@@ -27,32 +28,62 @@ type ProjectInfoProps = {
 
 function ProjectInfo({ project }: ProjectInfoProps) {
   return (
-    <div className="project-info">
-      <h1>{project.title}</h1>
+    <section className="project-info">
+      <div className="project-info-header">
+        <div>
+          <p className="project-info-location">
+            {project.location}
+          </p>
 
-      <p>
-        <strong>Location:</strong> {project.location}
-      </p>
+          <h1>
+            {project.title}
+          </h1>
+        </div>
 
-      <p>
-        <strong>Status:</strong>{" "}
-        {project.status === "sold" ? "Sold Out" : "Available"}
-      </p>
+        <span
+          className={
+            project.status === "sold"
+              ? "project-status-badge project-status-sold"
+              : "project-status-badge project-status-available"
+          }
+        >
+          {project.status === "sold"
+            ? "Sold Out"
+            : "Available"}
+        </span>
+      </div>
 
-      <p>
-        <strong>Price:</strong> {project.price}
-      </p>
+      <div className="project-facts">
+        <div className="project-fact">
+          <span>Starting price</span>
+          <strong>{project.price}</strong>
+        </div>
 
-      <p>
-        <strong>Number of apartments:</strong> {project.apartments}
-      </p>
+        <div className="project-fact">
+          <span>Apartments</span>
+          <strong>{project.apartments}</strong>
+        </div>
 
-      <p>
-        <strong>Delivery date:</strong> {project.deliveryDate}
-      </p>
+        <div className="project-fact">
+          <span>Delivery</span>
+          <strong>{project.deliveryDate}</strong>
+        </div>
+      </div>
 
-      <p>{project.description}</p>
-    </div>
+      <div className="project-about">
+        <p className="project-section-eyebrow">
+          ABOUT THE PROJECT
+        </p>
+
+        <h2>
+          Designed for modern living.
+        </h2>
+
+        <p className="project-description">
+          {project.description}
+        </p>
+      </div>
+    </section>
   )
 }
 

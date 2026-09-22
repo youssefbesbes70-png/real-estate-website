@@ -9,6 +9,7 @@ import ProjectInfo from "../components/ProjectInfo"
 import ProjectMap from "../components/ProjectMap"
 import ApartmentUnitsSection from "../components/ApartmentUnitsSection"
 import Lightbox from "../components/Lightbox"
+import ProjectCTA from "../components/ProjectCTA"
 
 
 type ApartmentUnit = {
@@ -357,6 +358,9 @@ function ProjectDetails() {
             onOpenLightbox={
               openLightbox
             }
+          />
+          <ProjectCTA
+            title={project.title}
           />
 
         </div>

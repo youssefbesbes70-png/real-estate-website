@@ -2901,3 +2901,1134 @@ iframe {
     width: 100%;
   }
 }
+
+/* =====================================================
+   PREMIUM PROJECT DETAILS
+===================================================== */
+
+.project-details {
+  width: 100%;
+  max-width: 1380px;
+
+  margin: 0 auto;
+
+  padding: 48px 48px 110px;
+}
+
+
+/* =====================================================
+   HERO GALLERY
+===================================================== */
+
+.project-details .image-slider {
+  width: 100%;
+  max-width: 1280px;
+
+  margin: 0 auto 70px;
+
+  overflow: hidden;
+}
+
+.project-details .project-details-image {
+  width: 100%;
+  height: clamp(420px, 56vw, 680px);
+
+  max-height: none;
+
+  object-fit: cover;
+
+  border-radius: 4px;
+
+  margin: 0;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.project-details-content {
+  max-width: 1180px;
+
+  margin: 0 auto;
+}
+
+
+/* =====================================================
+   PROJECT INFO
+===================================================== */
+
+.project-info {
+  margin-bottom: 110px;
+}
+
+.project-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 40px;
+
+  padding-bottom: 36px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.project-info-location {
+  margin: 0 0 12px !important;
+
+  color: #2563eb !important;
+
+  font-size: 13px !important;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.project-info h1 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: clamp(48px, 6vw, 76px);
+
+  line-height: 0.98;
+
+  letter-spacing: -3px;
+}
+
+
+/* STATUS BADGE */
+
+.project-status-badge {
+  flex-shrink: 0;
+
+  padding: 10px 16px;
+
+  border-radius: 4px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.project-status-available {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.project-status-sold {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+
+/* =====================================================
+   FACTS
+===================================================== */
+
+.project-facts {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  border-bottom: 1px solid #e2e8f0;
+
+  margin-bottom: 80px;
+}
+
+.project-fact {
+  padding: 32px 28px 32px 0;
+
+  border-right: 1px solid #e2e8f0;
+}
+
+.project-fact:not(:first-child) {
+  padding-left: 28px;
+}
+
+.project-fact:last-child {
+  border-right: none;
+}
+
+.project-fact span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+
+  text-transform: uppercase;
+}
+
+.project-fact strong {
+  display: block;
+
+  color: #1f2937;
+
+  font-size: 26px;
+
+  font-weight: 600;
+
+  letter-spacing: -0.5px;
+}
+
+
+/* =====================================================
+   ABOUT PROJECT
+===================================================== */
+
+.project-about {
+  display: grid;
+
+  grid-template-columns:
+    0.7fr 1.3fr;
+
+  column-gap: 80px;
+
+  align-items: start;
+}
+
+.project-section-eyebrow {
+  margin: 0 0 16px !important;
+
+  color: #2563eb !important;
+
+  font-size: 12px !important;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+.project-about h2 {
+  grid-column: 1;
+
+  max-width: 430px;
+
+  color: #1f2937;
+
+  font-size: clamp(36px, 4vw, 54px);
+
+  line-height: 1.05;
+
+  letter-spacing: -2px;
+}
+
+.project-description {
+  grid-column: 2;
+
+  margin: 0 !important;
+
+  max-width: 680px;
+
+  color: #64748b !important;
+
+  font-size: 17px !important;
+
+  line-height: 1.85 !important;
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+.project-map {
+  margin-top: 0;
+  margin-bottom: 110px;
+}
+
+.project-map-header {
+  display: grid;
+
+  grid-template-columns:
+    1fr 0.8fr;
+
+  gap: 80px;
+
+  align-items: end;
+
+  margin-bottom: 36px;
+}
+
+.project-map-header h2 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: clamp(36px, 4vw, 52px);
+
+  line-height: 1.05;
+
+  letter-spacing: -2px;
+}
+
+.project-map-header > p {
+  margin: 0 !important;
+
+  max-width: 460px;
+
+  color: #64748b !important;
+
+  font-size: 16px !important;
+
+  line-height: 1.7 !important;
+}
+
+.project-map-frame {
+  overflow: hidden;
+
+  border-radius: 4px;
+
+  box-shadow:
+    0 10px 35px rgba(15, 23, 42, 0.08);
+}
+
+.project-map-frame iframe {
+  width: 100%;
+
+  display: block;
+
+  border-radius: 0;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+  .project-details {
+    padding:
+      30px 24px
+      80px;
+  }
+
+  .project-details .image-slider {
+    margin-bottom: 55px;
+  }
+
+  .project-info {
+    margin-bottom: 80px;
+  }
+
+  .project-about {
+    grid-template-columns: 1fr;
+
+    gap: 28px;
+  }
+
+  .project-about h2,
+  .project-description {
+    grid-column: 1;
+  }
+
+  .project-map-header {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+  .project-details {
+    padding:
+      18px 16px
+      65px;
+  }
+
+  .project-details .image-slider {
+    margin-bottom: 42px;
+  }
+
+  .project-details .project-details-image {
+    height: 330px;
+
+    border-radius: 3px;
+  }
+
+  .project-info-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+    padding-bottom: 28px;
+  }
+
+  .project-info h1 {
+    font-size: 44px;
+
+    letter-spacing: -2px;
+  }
+
+  .project-facts {
+    grid-template-columns: 1fr;
+
+    margin-bottom: 55px;
+  }
+
+  .project-fact {
+    padding: 22px 0;
+
+    border-right: none;
+
+    border-bottom:
+      1px solid #e2e8f0;
+  }
+
+  .project-fact:not(:first-child) {
+    padding-left: 0;
+  }
+
+  .project-fact:last-child {
+    border-bottom: none;
+  }
+
+  .project-about h2 {
+    font-size: 38px;
+  }
+
+  .project-description {
+    font-size: 16px !important;
+  }
+
+  .project-map {
+    margin-bottom: 70px;
+  }
+
+  .project-map-frame iframe {
+    height: 330px;
+  }
+}
+
+/* =====================================================
+   PREMIUM APARTMENT SECTION
+===================================================== */
+
+.project-apartments {
+  margin-top: 110px;
+  margin-bottom: 110px;
+}
+
+.project-apartments-header {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+
+  gap: 80px;
+
+  align-items: end;
+
+  margin-bottom: 45px;
+}
+
+.project-apartments-header h2 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: clamp(38px, 4vw, 54px);
+
+  line-height: 1.05;
+
+  letter-spacing: -2px;
+}
+
+.project-apartments-header > p {
+  max-width: 480px;
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.apartment-units-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 26px;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.apartment-unit-card {
+  padding: 0;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 4px;
+
+  box-shadow:
+    0 8px 30px rgba(15, 23, 42, 0.05);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.apartment-unit-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 20px 45px rgba(15, 23, 42, 0.1);
+}
+
+
+/* SOLD */
+
+.apartment-unit-card-sold {
+  opacity: 1;
+  filter: none;
+}
+
+.apartment-unit-card-sold
+.apartment-card-image img {
+  filter: grayscale(45%);
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.apartment-card-image {
+  position: relative;
+
+  height: 260px;
+
+  overflow: hidden;
+
+  background: #f1f5f9;
+}
+
+.apartment-card-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.7s ease;
+}
+
+.apartment-unit-card:hover
+.apartment-card-image img {
+  transform: scale(1.04);
+}
+
+
+/* EMPTY IMAGE */
+
+.apartment-no-image {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fafc,
+      #eef2f7
+    );
+}
+
+.apartment-no-image span {
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.apartment-no-image strong {
+  color: #1f2937;
+
+  font-size: 20px;
+
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.apartment-status {
+  position: absolute;
+
+  top: 16px;
+  left: 16px;
+
+  padding: 8px 12px;
+
+  border-radius: 4px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+}
+
+.available-unit {
+  background: white;
+
+  color: #2563eb;
+}
+
+.sold-unit {
+  background: #1f2937;
+
+  color: white;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.apartment-card-content {
+  padding: 25px 24px 22px;
+}
+
+.apartment-card-heading {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 16px;
+
+  margin-bottom: 26px;
+}
+
+.apartment-card-heading p {
+  margin: 0 0 7px;
+
+  color: #2563eb;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+}
+
+.apartment-card-heading h3 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 25px;
+
+  line-height: 1.1;
+}
+
+.apartment-photo-count {
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.apartment-card-details {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  padding:
+    18px 0;
+
+  border-top:
+    1px solid #e2e8f0;
+
+  border-bottom:
+    1px solid #e2e8f0;
+}
+
+.apartment-card-details div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.apartment-card-details div + div {
+  padding-left: 20px;
+
+  border-left:
+    1px solid #e2e8f0;
+}
+
+.apartment-card-details span {
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.apartment-card-details strong {
+  color: #334155;
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   ACTION
+===================================================== */
+
+.apartment-card-action {
+  padding-top: 20px;
+}
+
+.apartment-card-action a {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  color: #1f2937;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.apartment-card-action a span {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  background: #f1f5f9;
+
+  color: #2563eb;
+
+  font-size: 17px;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.apartment-card-action a:hover span {
+  background: #2563eb;
+
+  color: white;
+
+  transform: translateX(3px);
+}
+
+.apartment-plan-unavailable {
+  color: #94a3b8;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+  .apartment-units-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .project-apartments-header {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+  .project-apartments {
+    margin-top: 70px;
+    margin-bottom: 70px;
+  }
+
+  .project-apartments-header {
+    margin-bottom: 30px;
+  }
+
+  .project-apartments-header h2 {
+    font-size: 38px;
+  }
+
+  .apartment-units-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .apartment-card-image {
+    height: 250px;
+  }
+}
+
+/* =====================================================
+   PROJECT CTA
+===================================================== */
+
+.project-cta {
+  position: relative;
+
+  margin-top: 110px;
+
+  min-height: 390px;
+
+  padding: 70px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 60px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      125deg,
+      #1f2937 0%,
+      #1f2937 60%,
+      #26364c 100%
+    );
+
+  color: white;
+}
+
+
+/* DECORATIVE ARCHITECTURAL LINES */
+
+.project-cta::before {
+  content: "";
+
+  position: absolute;
+
+  width: 380px;
+  height: 380px;
+
+  top: -200px;
+  right: -60px;
+
+  border:
+    1px solid rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+
+  transform: rotate(35deg);
+}
+
+
+.project-cta-content,
+.project-cta-actions {
+  position: relative;
+  z-index: 2;
+}
+
+
+.project-cta-content {
+  max-width: 720px;
+}
+
+
+.project-cta h2 {
+  margin: 0 0 24px;
+
+  max-width: 700px;
+
+  color: white;
+
+  font-size:
+    clamp(
+      42px,
+      5vw,
+      66px
+    );
+
+  line-height: 0.98;
+
+  letter-spacing: -2.5px;
+}
+
+
+.project-cta h2 span {
+  display: block;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.48
+    );
+}
+
+
+.project-cta-content > p:last-child {
+  max-width: 570px;
+
+  margin: 0;
+
+  color: #cbd5e1;
+
+  font-size: 16px;
+
+  line-height: 1.75;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.project-cta-actions {
+  width: 220px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+
+.project-cta-primary,
+.project-cta-secondary {
+  min-height: 54px;
+
+  padding: 0 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+.project-cta-primary {
+  background: #2563eb;
+
+  border:
+    1px solid #2563eb;
+
+  color: white;
+}
+
+
+.project-cta-primary:hover {
+  background: #1d4ed8;
+
+  transform:
+    translateY(-2px);
+}
+
+
+.project-cta-primary span {
+  font-size: 18px;
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+.project-cta-primary:hover span {
+  transform:
+    translateX(4px);
+}
+
+
+.project-cta-secondary {
+  background: transparent;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.25
+    );
+
+  color: white;
+}
+
+
+.project-cta-secondary:hover {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.06
+    );
+
+  border-color: white;
+
+  transform:
+    translateY(-2px);
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 850px) {
+  .project-cta {
+    padding: 55px 40px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .project-cta-actions {
+    width: 100%;
+
+    flex-direction: row;
+  }
+
+  .project-cta-primary,
+  .project-cta-secondary {
+    flex: 1;
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+  .project-cta {
+    min-height: auto;
+
+    margin-top: 70px;
+
+    padding: 48px 22px;
+  }
+
+  .project-cta h2 {
+    font-size: 40px;
+  }
+
+  .project-cta-content
+  > p:last-child {
+    font-size: 15px;
+  }
+
+  .project-cta-actions {
+    flex-direction: column;
+  }
+
+  .project-cta-primary,
+  .project-cta-secondary {
+    width: 100%;
+  }
+}
