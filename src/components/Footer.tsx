@@ -8,7 +8,9 @@ function Footer() {
     <footer className="footer">
       <div className="footer-top">
         <div className="footer-column">
-          <h3>{t("footer.aboutTitle")}</h3>
+          <h3>
+            {t("footer.aboutTitle")}
+          </h3>
 
           <p>
             {t("footer.description")}
@@ -16,7 +18,9 @@ function Footer() {
         </div>
 
         <div className="footer-column">
-          <h3>{t("footer.usefulLinks")}</h3>
+          <h3>
+            {t("footer.usefulLinks")}
+          </h3>
 
           <div className="footer-links">
             <Link to="/">
@@ -38,17 +42,32 @@ function Footer() {
         </div>
 
         <div className="footer-column">
-          <h3>{t("footer.contactInfo")}</h3>
+          <h3>
+            {t("footer.contactInfo")}
+          </h3>
 
-          <p>Av Hedi nouira ,Residence le diamant app A31 2037 Ariana Tunis - Tunisie</p>
+          <p>
+            Av Hedi Nouira, Résidence Le Diamant,
+            App A31, 2037 Ariana, Tunis - Tunisie
+          </p>
 
-          <p>+216 27 717 792</p>
+          <p>
+            <a href="tel:+21627717792">
+              +216 27 717 792
+            </a>
+          </p>
 
-          <p>archytas.immobiliere@gmail.com</p>
+          <p>
+            <a href="mailto:archytas.immobiliere@gmail.com">
+              archytas.immobiliere@gmail.com
+            </a>
+          </p>
         </div>
 
         <div className="footer-column">
-          <h3>{t("footer.salesOffice")}</h3>
+          <h3>
+            {t("footer.salesOffice")}
+          </h3>
 
           <p>
             {t("footer.salesDescription")}

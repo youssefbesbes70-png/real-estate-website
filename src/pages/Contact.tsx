@@ -230,7 +230,8 @@ function Contact() {
             </span>
 
             <p>
-              Av Hedi nouira ,Residence le diamant app A31 2037 Ariana Tunis - Tunisie
+              Av Hedi Nouira, Résidence Le Diamant,
+              App A31, 2037 Ariana, Tunis - Tunisie
             </p>
           </div>
         </section>
@@ -252,7 +253,7 @@ function Contact() {
             </div>
 
             <iframe
-              src="https://maps.app.goo.gl/BnNaShqw1VeAsoeF7"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.2386195827994!2d10.16895879999999!3d36.86538389999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e2ccaa3d70cd9d%3A0xad14d3c238250ed2!2sR%C3%A9sidence%20Le%20Diamant!5e1!3m2!1sfr!2stn!4v1790185349349!5m2!1sfr!2stn"
               width="100%"
               height="560"
               style={{
@@ -260,7 +261,7 @@ function Contact() {
               }}
               allowFullScreen
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+              referrerPolicy="strict-origin-when-cross-origin"
               title="Archytas Immobilière office location"
             />
           </div>
