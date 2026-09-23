@@ -40,11 +40,11 @@ function Footer() {
         <div className="footer-column">
           <h3>{t("footer.contactInfo")}</h3>
 
-          <p>Tunis, Tunisia</p>
+          <p>Av Hedi nouira ,Residence le diamant app A31 2037 Ariana Tunis - Tunisie</p>
 
-          <p>+216 22 250 152</p>
+          <p>+216 27 717 792</p>
 
-          <p>contact@dreambuild.com</p>
+          <p>archytas.immobiliere@gmail.com</p>
         </div>
 
         <div className="footer-column">

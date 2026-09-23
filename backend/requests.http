@@ -11,7 +11,7 @@ Content-Type: application/json
   "deliveryDate": "December 2027",
   "coverImage": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde",
   "description": "My first project created through the backend API.",
-  "mapEmbedUrl": "https://www.google.com/maps?q=Tunis,Tunisia&output=embed",
+  "mapEmbedUrl": "https://maps.app.goo.gl/BnNaShqw1VeAsoeF7",
   "projectImages": [],
   "apartmentUnits": []
 }
@@ -98,3 +98,13 @@ Content-Type: application/json
 
 GET http://localhost:5000/api/contact
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbklkIjoxLCJ1c2VybmFtZSI6IndhbGlkIiwiaWF0IjoxNzg5ODUzMDgzLCJleHAiOjE3ODk4NjAyODN9.34oz1UtPaEBrfc7CsM19uIkZdz5icEJJfaH_GTWWqpc
+
+### MARK MESSAGE AS READ
+
+PATCH http://localhost:5000/api/contact/1/read
+Authorization: Bearer YOUR_ADMIN_TOKEN
+
+### DELETE MESSAGE
+
+DELETE http://localhost:5000/api/contact/1
+Authorization: Bearer YOUR_ADMIN_TOKEN

@@ -205,8 +205,8 @@ function Contact() {
               )}
             </span>
 
-            <a href="tel:+21612345678">
-              +216 12 345 678
+            <a href="tel:+21627717792">
+              +216 27 717 792
             </a>
           </div>
 
@@ -217,8 +217,8 @@ function Contact() {
               )}
             </span>
 
-            <a href="mailto:contact@dreambuild.com">
-              contact@dreambuild.com
+            <a href="mailto:archytas.immobiliere@gmail.com">
+              archytas.immobiliere@gmail.com
             </a>
           </div>
 
@@ -230,7 +230,7 @@ function Contact() {
             </span>
 
             <p>
-              Tunis, Tunisia
+              Av Hedi nouira ,Residence le diamant app A31 2037 Ariana Tunis - Tunisie
             </p>
           </div>
         </section>
@@ -252,7 +252,7 @@ function Contact() {
             </div>
 
             <iframe
-              src="https://www.google.com/maps?q=Tunis,Tunisia&output=embed"
+              src="https://maps.app.goo.gl/BnNaShqw1VeAsoeF7"
               width="100%"
               height="560"
               style={{
