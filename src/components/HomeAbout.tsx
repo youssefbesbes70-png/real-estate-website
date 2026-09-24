@@ -38,22 +38,22 @@ function HomeAbout() {
 
         <div className="home-about-stats">
           <div>
-            <strong>10+</strong>
+            <strong>15+</strong>
             <span>{t("aboutHome.years")}</span>
           </div>
 
           <div>
-            <strong>15</strong>
+            <strong>10</strong>
             <span>{t("aboutHome.projects")}</span>
           </div>
 
           <div>
-            <strong>300+</strong>
+            <strong>200+</strong>
             <span>{t("aboutHome.clients")}</span>
           </div>
 
           <div>
-            <strong>500+</strong>
+            <strong>200+</strong>
             <span>{t("aboutHome.apartments")}</span>
           </div>
         </div>

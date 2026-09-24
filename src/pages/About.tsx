@@ -135,7 +135,7 @@ function About() {
         <section className="about-numbers">
           <div>
             <strong>
-              10+
+              15+
             </strong>
 
             <span>
@@ -147,7 +147,7 @@ function About() {
 
           <div>
             <strong>
-              15
+              10
             </strong>
 
             <span>
@@ -159,7 +159,7 @@ function About() {
 
           <div>
             <strong>
-              300+
+              200+
             </strong>
 
             <span>
@@ -171,7 +171,7 @@ function About() {
 
           <div>
             <strong>
-              480+
+              200+
             </strong>
 
             <span>
