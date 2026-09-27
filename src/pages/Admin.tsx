@@ -572,30 +572,60 @@ function Admin() {
   // EDIT FORM
   // =====================================================
 
-  const openEditForm = (
-    project: Project
-  ) => {
-    setEditingSlug(project.slug)
+  const openEditForm = async (
+  project: Project
+) => {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/projects/${project.slug}`
+    )
+
+    if (!response.ok) {
+      throw new Error(
+        "Could not load project details"
+      )
+    }
+
+    const fullProject = await response.json()
+
+    setEditingSlug(fullProject.slug)
 
     setFormData({
-      slug: project.slug,
-      title: project.title,
-      location: project.location,
-      status: project.status,
-      price: project.price,
-      apartments: project.apartments,
+      slug:
+        fullProject.slug ?? "",
+
+      title:
+        fullProject.title ?? "",
+
+      location:
+        fullProject.location ?? "",
+
+      status:
+        fullProject.status ?? "available",
+
+      price:
+        fullProject.price ?? "",
+
+      apartments:
+        fullProject.apartments ?? 0,
+
       deliveryDate:
-        project.deliveryDate ?? "",
+        fullProject.deliveryDate ?? "",
+
       coverImage:
-        project.coverImage ?? "",
+        fullProject.coverImage ?? "",
+
       description:
-        project.description ?? "",
+        fullProject.description ?? "",
+
       mapEmbedUrl:
-        project.mapEmbedUrl ?? "",
+        fullProject.mapEmbedUrl ?? "",
+
       projectImages:
-        project.projectImages ?? [],
+        fullProject.projectImages ?? [],
+
       apartmentUnits:
-        project.apartmentUnits ?? [],
+        fullProject.apartmentUnits ?? [],
     })
 
     setShowForm(true)
@@ -604,7 +634,19 @@ function Admin() {
       top: 0,
       behavior: "smooth",
     })
+  } catch (error) {
+    console.error(
+      "Error loading project details:",
+      error
+    )
+
+    alert(
+      error instanceof Error
+        ? error.message
+        : "Could not load project details"
+    )
   }
+}
 
   // =====================================================
   // CLOSE FORM
