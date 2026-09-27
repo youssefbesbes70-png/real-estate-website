@@ -31,13 +31,11 @@ const {
 const router =
   express.Router();
 
-
 // Public
 router.get(
   "/",
   getAllProjects
 );
-
 
 // Protected
 router.post(
@@ -49,13 +47,11 @@ router.post(
   createProject
 );
 
-
 // Public
 router.get(
   "/:slug",
   getProjectBySlug
 );
-
 
 // Protected
 router.put(
@@ -67,13 +63,11 @@ router.put(
   updateProject
 );
 
-
 // Protected
 router.delete(
   "/:slug",
   authenticateAdmin,
   deleteProject
 );
-
 
 module.exports = router;

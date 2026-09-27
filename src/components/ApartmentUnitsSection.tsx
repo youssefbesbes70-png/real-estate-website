@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 type ApartmentUnit = {
   type: string
   images: string[]
-  plan: string
+  plans: string[]
   available: boolean
   floor: string
   surface: string
@@ -108,6 +108,9 @@ function ApartmentUnitsSection({
 
             const optimizedImage =
               optimizeImage(firstImage)
+
+            const plans =
+              unit.plans ?? []
 
             return (
               <article
@@ -227,33 +230,50 @@ function ApartmentUnitsSection({
                   </div>
 
                   <div className="apartment-card-action">
-                    {unit.available &&
-                    unit.plan ? (
-                      <a
-                        href={
-                          unit.plan
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    {plans.length > 0 ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "8px",
+                        }}
                       >
-                        {t(
-                          "projectDetails.viewFloorPlan"
-                        )}
+                        {plans.map(
+                          (
+                            plan,
+                            planIndex
+                          ) => (
+                            <a
+                              key={
+                                planIndex
+                              }
+                              href={plan}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {plans.length ===
+                              1
+                                ? t(
+                                    "projectDetails.viewFloorPlan"
+                                  )
+                                : `${t(
+                                    "projectDetails.viewFloorPlan"
+                                  )} ${
+                                    planIndex +
+                                    1
+                                  }`}
 
-                        <span>
-                          →
-                        </span>
-                      </a>
-                    ) : unit.available ? (
-                      <span className="apartment-plan-unavailable">
-                        {t(
-                          "projectDetails.planComingSoon"
+                              <span>
+                                →
+                              </span>
+                            </a>
+                          )
                         )}
-                      </span>
+                      </div>
                     ) : (
                       <span className="apartment-plan-unavailable">
                         {t(
-                          "projectDetails.noLongerAvailable"
+                          "projectDetails.planComingSoon"
                         )}
                       </span>
                     )}

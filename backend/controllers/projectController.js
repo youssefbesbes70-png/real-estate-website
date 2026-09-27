@@ -56,7 +56,6 @@ async function getAllProjects(req, res) {
       ORDER BY id
     `)
 
-    // Allow browsers to briefly cache the project list
     res.set(
       "Cache-Control",
       "public, max-age=60, stale-while-revalidate=300"
@@ -74,7 +73,6 @@ async function getAllProjects(req, res) {
     })
   }
 }
-
 
 // =====================================================
 // GET ONE PROJECT
@@ -102,7 +100,6 @@ async function getProjectBySlug(req, res) {
       })
     }
 
-    // Individual project data can also be cached briefly
     res.set(
       "Cache-Control",
       "public, max-age=60, stale-while-revalidate=300"
@@ -120,7 +117,6 @@ async function getProjectBySlug(req, res) {
     })
   }
 }
-
 
 // =====================================================
 // CREATE PROJECT
@@ -216,7 +212,6 @@ async function createProject(req, res) {
   }
 }
 
-
 // =====================================================
 // UPDATE PROJECT
 // =====================================================
@@ -296,7 +291,6 @@ async function updateProject(req, res) {
   }
 }
 
-
 // =====================================================
 // DELETE PROJECT
 // =====================================================
@@ -337,7 +331,6 @@ async function deleteProject(req, res) {
     })
   }
 }
-
 
 module.exports = {
   getAllProjects,

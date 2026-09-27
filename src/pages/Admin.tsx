@@ -6,7 +6,7 @@ import ImageUpload from "../components/ImageUpload"
 type ApartmentUnit = {
   type: string
   images: string[]
-  plan: string
+  plans: string[]
   available: boolean
   floor: string
   surface: string
@@ -420,7 +420,7 @@ function Admin() {
     const newApartment: ApartmentUnit = {
       type: "",
       images: [],
-      plan: "",
+      plans: [],
       available: true,
       floor: "",
       surface: "",
@@ -467,6 +467,83 @@ function Admin() {
         previous.apartmentUnits.filter(
           (_, index) =>
             index !== apartmentIndex
+        ),
+    }))
+  }
+
+  // =====================================================
+  // APARTMENT PLANS
+  // =====================================================
+
+  const addApartmentPlan = (
+    apartmentIndex: number
+  ) => {
+    setFormData((previous) => ({
+      ...previous,
+      apartmentUnits:
+        previous.apartmentUnits.map(
+          (apartment, index) =>
+            index === apartmentIndex
+              ? {
+                  ...apartment,
+                  plans: [
+                    ...apartment.plans,
+                    "",
+                  ],
+                }
+              : apartment
+        ),
+    }))
+  }
+
+  const updateApartmentPlan = (
+    apartmentIndex: number,
+    planIndex: number,
+    url: string
+  ) => {
+    setFormData((previous) => ({
+      ...previous,
+      apartmentUnits:
+        previous.apartmentUnits.map(
+          (apartment, index) => {
+            if (index !== apartmentIndex) {
+              return apartment
+            }
+
+            const newPlans = [
+              ...apartment.plans,
+            ]
+
+            newPlans[planIndex] = url
+
+            return {
+              ...apartment,
+              plans: newPlans,
+            }
+          }
+        ),
+    }))
+  }
+
+  const removeApartmentPlan = (
+    apartmentIndex: number,
+    planIndex: number
+  ) => {
+    setFormData((previous) => ({
+      ...previous,
+      apartmentUnits:
+        previous.apartmentUnits.map(
+          (apartment, index) =>
+            index === apartmentIndex
+              ? {
+                  ...apartment,
+                  plans:
+                    apartment.plans.filter(
+                      (_, index) =>
+                        index !== planIndex
+                    ),
+                }
+              : apartment
         ),
     }))
   }
@@ -625,7 +702,31 @@ function Admin() {
         fullProject.projectImages ?? [],
 
       apartmentUnits:
-        fullProject.apartmentUnits ?? [],
+        (fullProject.apartmentUnits ?? []).map(
+          (apartment: {
+            type?: string
+            images?: string[]
+            plan?: string
+            plans?: string[]
+            available?: boolean
+            floor?: string
+            surface?: string
+          }) => ({
+            type: apartment.type ?? "",
+            images: Array.isArray(apartment.images)
+              ? apartment.images
+              : [],
+            plans: Array.isArray(apartment.plans)
+              ? apartment.plans
+              : apartment.plan
+                ? [apartment.plan]
+                : [],
+            available:
+              apartment.available ?? true,
+            floor: apartment.floor ?? "",
+            surface: apartment.surface ?? "",
+          })
+        ),
     })
 
     setShowForm(true)
@@ -1224,21 +1325,71 @@ function Admin() {
                   Available
                 </label>
 
-                {/* PLAN */}
+                {/* APARTMENT PLANS */}
 
-                <ImageUpload
-                  label="Apartment Plan"
-                  value={
-                    apartment.plan
-                  }
-                  onUpload={(url) =>
-                    updateApartment(
-                      apartmentIndex,
-                      "plan",
-                      url
+                <h4>
+                  Apartment Plans
+                </h4>
+
+                {apartment.plans.map(
+                  (
+                    plan,
+                    planIndex
+                  ) => (
+                    <div
+                      key={
+                        planIndex
+                      }
+                      style={{
+                        border:
+                          "1px solid #ddd",
+                        padding:
+                          "10px",
+                      }}
+                    >
+                      <ImageUpload
+                        label={`Apartment Plan ${
+                          planIndex + 1
+                        }`}
+                        value={
+                          plan
+                        }
+                        onUpload={(
+                          url
+                        ) =>
+                          updateApartmentPlan(
+                            apartmentIndex,
+                            planIndex,
+                            url
+                          )
+                        }
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          removeApartmentPlan(
+                            apartmentIndex,
+                            planIndex
+                          )
+                        }
+                      >
+                        Remove Plan
+                      </button>
+                    </div>
+                  )
+                )}
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    addApartmentPlan(
+                      apartmentIndex
                     )
                   }
-                />
+                >
+                  + Add Plan Image
+                </button>
 
                 {/* APARTMENT IMAGES */}
 

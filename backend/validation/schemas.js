@@ -32,7 +32,9 @@ const apartmentSchema = z.object({
     .array(optionalUrl)
     .max(30),
 
-  plan: optionalUrl,
+  plans: z
+    .array(optionalUrl)
+    .max(20),
 
   available: z.boolean(),
 
