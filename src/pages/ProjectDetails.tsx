@@ -15,7 +15,7 @@ import Lightbox from "../components/Lightbox"
 type ApartmentUnit = {
   type: string
   images: string[]
-  plan: string
+  plans: string[]
   available: boolean
   floor: string
   surface: string
@@ -34,6 +34,16 @@ type Project = {
   apartmentUnits: ApartmentUnit[]
   description: string
   mapEmbedUrl: string
+}
+
+type ApiApartmentUnit = {
+  type?: string
+  images?: string[]
+  plan?: string
+  plans?: string[]
+  available?: boolean
+  floor?: string
+  surface?: string
 }
 
 function ProjectDetails() {
@@ -88,7 +98,63 @@ function ProjectDetails() {
         return response.json()
       })
       .then((data) => {
-        setProject(data)
+        const normalizedProject: Project = {
+          ...data,
+
+          projectImages:
+            Array.isArray(
+              data.projectImages
+            )
+              ? data.projectImages
+              : [],
+
+          apartmentUnits:
+            (
+              data.apartmentUnits ?? []
+            ).map(
+              (
+                apartment: ApiApartmentUnit
+              ) => ({
+                type:
+                  apartment.type ?? "",
+
+                images:
+                  Array.isArray(
+                    apartment.images
+                  )
+                    ? apartment.images
+                    : [],
+
+                plans:
+                  Array.isArray(
+                    apartment.plans
+                  )
+                    ? apartment.plans
+                    : apartment.plan
+                      ? [
+                          apartment.plan,
+                        ]
+                      : [],
+
+                available:
+                  apartment.available ??
+                  true,
+
+                floor:
+                  apartment.floor ??
+                  "",
+
+                surface:
+                  apartment.surface ??
+                  "",
+              })
+            ),
+        }
+
+        setProject(
+          normalizedProject
+        )
+
         setLoading(false)
       })
       .catch((error) => {
@@ -126,23 +192,38 @@ function ProjectDetails() {
       <>
         <Helmet>
           <title>
-            {t("projectDetails.loading")} | Archytas Immobilière
+            {t(
+              "projectDetails.loading"
+            )}{" "}
+            | Archytas Immobilière
           </title>
         </Helmet>
 
-        <h2 style={{ padding: "40px" }}>
-          {t("projectDetails.loading")}
+        <h2
+          style={{
+            padding: "40px",
+          }}
+        >
+          {t(
+            "projectDetails.loading"
+          )}
         </h2>
       </>
     )
   }
 
-  if (error || !project) {
+  if (
+    error ||
+    !project
+  ) {
     return (
       <>
         <Helmet>
           <title>
-            {t("projectDetails.notFound")} | Archytas Immobilière
+            {t(
+              "projectDetails.notFound"
+            )}{" "}
+            | Archytas Immobilière
           </title>
 
           <meta
@@ -151,8 +232,14 @@ function ProjectDetails() {
           />
         </Helmet>
 
-        <h2 style={{ padding: "40px" }}>
-          {t("projectDetails.notFound")}
+        <h2
+          style={{
+            padding: "40px",
+          }}
+        >
+          {t(
+            "projectDetails.notFound"
+          )}
         </h2>
       </>
     )
@@ -166,7 +253,8 @@ function ProjectDetails() {
 
   const seoDescription =
     project.description
-      ? project.description.length > 155
+      ? project.description.length >
+        155
         ? `${project.description.substring(
             0,
             152
@@ -179,6 +267,11 @@ function ProjectDetails() {
     project.projectImages?.[0] ||
     ""
 
+  const selectedApartment =
+    project.apartmentUnits[
+      selectedApartmentIndex
+    ]
+
   return (
     <>
       <Helmet>
@@ -188,7 +281,9 @@ function ProjectDetails() {
 
         <meta
           name="description"
-          content={seoDescription}
+          content={
+            seoDescription
+          }
         />
 
         <meta
@@ -208,7 +303,9 @@ function ProjectDetails() {
 
         <meta
           property="og:description"
-          content={seoDescription}
+          content={
+            seoDescription
+          }
         />
 
         <meta
@@ -231,7 +328,9 @@ function ProjectDetails() {
 
       <div className="project-details">
         <ProjectHeroSlider
-          title={project.title}
+          title={
+            project.title
+          }
           projectImages={
             project.projectImages
           }
@@ -243,14 +342,18 @@ function ProjectDetails() {
           />
 
           <ProjectMap
-            title={project.title}
+            title={
+              project.title
+            }
             mapEmbedUrl={
               project.mapEmbedUrl
             }
           />
 
           <ApartmentUnitsSection
-            title={project.title}
+            title={
+              project.title
+            }
             apartmentUnits={
               project.apartmentUnits
             }
@@ -260,27 +363,32 @@ function ProjectDetails() {
           />
 
           <ProjectCTA
-            title={project.title}
+            title={
+              project.title
+            }
           />
         </div>
 
-        {isLightboxOpen && (
-          <Lightbox
-            title={project.title}
-            apartment={
-              project.apartmentUnits[
-                selectedApartmentIndex
-              ]
-            }
-            imageIndex={
-              selectedApartmentImageIndex
-            }
-            setImageIndex={
-              setSelectedApartmentImageIndex
-            }
-            onClose={closeLightbox}
-          />
-        )}
+        {isLightboxOpen &&
+          selectedApartment && (
+            <Lightbox
+              title={
+                project.title
+              }
+              apartment={
+                selectedApartment
+              }
+              imageIndex={
+                selectedApartmentImageIndex
+              }
+              setImageIndex={
+                setSelectedApartmentImageIndex
+              }
+              onClose={
+                closeLightbox
+              }
+            />
+          )}
       </div>
     </>
   )

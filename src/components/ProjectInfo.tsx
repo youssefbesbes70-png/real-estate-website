@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 type ApartmentUnit = {
   type: string
   images: string[]
-  plan: string
+  plans: string[]
   available: boolean
   floor: string
   surface: string
