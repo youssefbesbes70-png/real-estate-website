@@ -11,7 +11,7 @@ Content-Type: application/json
   "deliveryDate": "December 2027",
   "coverImage": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde",
   "description": "My first project created through the backend API.",
-  "mapEmbedUrl": "https://maps.app.goo.gl/BnNaShqw1VeAsoeF7",
+  "mapEmbedUrl": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.2386195827994!2d10.16895879999999!3d36.86538389999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e2ccaa3d70cd9d%3A0xad14d3c238250ed2!2sR%C3%A9sidence%20Le%20Diamant!5e1!3m2!1sfr!2stn!4v1790185349349!5m2!1sfr!2stn\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
   "projectImages": [],
   "apartmentUnits": []
 }

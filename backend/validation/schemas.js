@@ -25,7 +25,10 @@ const apartmentSchema = z.object({
   type: z
     .string()
     .trim()
-    .min(1, "Apartment type is required")
+    .min(
+      1,
+      "Apartment type is required"
+    )
     .max(50),
 
   images: z
@@ -108,73 +111,82 @@ const projectFields = {
     .max(200),
 };
 
-const createProjectSchema = z.object({
-  slug: z
-    .string()
-    .trim()
-    .min(2)
-    .max(100)
-    .regex(
-      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-      "Slug must look like: green-city"
-    ),
+const createProjectSchema =
+  z.object({
+    slug: z
+      .string()
+      .trim()
+      .min(2)
+      .max(100)
+      .regex(
+        /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+        "Slug must look like: green-city"
+      ),
 
-  ...projectFields,
-});
+    ...projectFields,
+  });
 
-const updateProjectSchema = z.object({
-  ...projectFields,
-});
+const updateProjectSchema =
+  z.object({
+    ...projectFields,
+  });
 
-const loginSchema = z.object({
-  username: z
-    .string()
-    .trim()
-    .min(1)
-    .max(100),
+const loginSchema =
+  z.object({
+    username: z
+      .string()
+      .trim()
+      .min(1)
+      .max(100),
 
-  password: z
-    .string()
-    .min(8)
-    .max(200),
-});
+    password: z
+      .string()
+      .min(8)
+      .max(200),
+  });
 
-const contactSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Name is required")
-    .max(100),
+const contactSchema =
+  z.object({
+    name: z
+      .string()
+      .trim()
+      .min(
+        2,
+        "Name is required"
+      )
+      .max(100),
 
-  email: z
-    .string()
-    .trim()
-    .email("Invalid email address")
-    .max(255),
+    email: z
+      .string()
+      .trim()
+      .email(
+        "Invalid email address"
+      )
+      .max(255),
 
-  phone: z
-    .string()
-    .trim()
-    .max(50)
-    .optional()
-    .default(""),
+    phone: z
+      .string()
+      .trim()
+      .max(50)
+      .optional()
+      .default(""),
 
-  subject: z
-    .string()
-    .trim()
-    .max(200)
-    .optional()
-    .default(""),
+    subject: z
+      .string()
+      .trim()
+      .max(200)
+      .optional()
+      .default(""),
 
-  message: z
-    .string()
-    .trim()
-    .min(
-      10,
-      "Message must contain at least 10 characters"
-    )
-    .max(5000),
-});
+    message: z
+      .string()
+      .trim()
+      .min(
+        10,
+        "Message must contain at least 10 characters"
+      )
+      .max(5000),
+  });
 
 module.exports = {
   createProjectSchema,
